@@ -11,6 +11,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
+    <!-- Inclusion of required libraries for structural DOM captures -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
         :root {
             --primary: #024b80;
@@ -101,6 +105,7 @@
         }
 
         .logo { font-size: 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .logo img { max-height: 40px; border-radius: 50%; object-fit: cover; }
 
         /* LED Text Banner Styles */
         .led-container {
@@ -247,6 +252,45 @@
         .btn-edit-small { color: var(--secondary); border: 1px solid var(--secondary); background: transparent; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .btn-edit-small:hover { background: var(--secondary); color: white; }
 
+        /* Certificate buttons style in settings */
+        .cert-badge-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #fff7e6, #fff);
+            border: 2px solid #d4af37;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #b8972f;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .cert-badge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2);
+            background: linear-gradient(135deg, #d4af37, #b8972f);
+            color: #fff;
+        }
+        .cert-badge-btn .badge-icon {
+            background: #d4af37;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .cert-badge-btn:hover .badge-icon {
+            background: white;
+            color: #b8972f;
+        }
+
         /* --- Exercise Wrapper Box Inside Form --- */
         .exercise-form-block { background: rgba(0,0,0,0.02); border: 2px solid #e1e8ed; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; position: relative; color: inherit; }
 
@@ -258,23 +302,161 @@
         .exam-results-title { font-size: 1.8rem; font-weight: bold; color: #f57f17; margin-bottom: 1rem; }
         .exam-grade-badge { display: inline-block; font-size: 3rem; font-weight: bold; background: #fbc02d; color: white; padding: 0.5rem 2rem; border-radius: 50px; margin-top: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
+        /* --- Elegant White and Gold Student Certificate Overlay --- */
+        .certificate-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .certificate-modal-wrapper {
+            max-width: 950px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        /* Lock aspect ratio constraints to clean layout models matching standard dimensions */
+        .certificate-container-box {
+            position: relative;
+            background: #ffffff;
+            border: 4px double #d4af37;
+            padding: 45px;
+            color: #2c3e50;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.2);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            width: 100%;
+            max-width: 891px;
+            height: 630px;
+            margin: 0 auto;
+        }
+        .certificate-outer-border {
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px solid #d4af37;
+            pointer-events: none;
+        }
+        .cert-logo-badge {
+            position: absolute;
+            top: 35px; left: 45px;
+            width: 80px; height: 80px;
+            border: 2px solid #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #024b80;
+            overflow: hidden;
+            background: #fff;
+        }
+        .cert-logo-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cert-main-title {
+            font-size: 3.5rem;
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-underline-offset: 8px;
+        }
+        .cert-given-to {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+        }
+        .cert-student-name {
+            font-size: 2.8rem;
+            color: #d4af37;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .cert-divider-line {
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+            margin: 15px auto;
+        }
+        .cert-description {
+            font-size: 1.35rem;
+            color: #024b80;
+            line-height: 2;
+            max-width: 80%;
+            margin: 20px auto;
+        }
+        .cert-footer-signature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 15px;
+            padding-right: 40px;
+            float: right;
+        }
+        .cert-sig-img-container {
+            width: 150px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+        .cert-sig-img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .cert-sig-line {
+            width: 200px;
+            border-top: 1px solid #7f8c8d;
+            padding-top: 5px;
+            font-size: 1.1rem;
+            color: #024b80;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            .certificate-overlay, .certificate-overlay * { visibility: visible; }
+            .certificate-overlay { position: absolute; left: 0; top: 0; width: 100%; background: none; padding: 0; }
+            .certificate-modal-wrapper { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+            .cert-action-btns { display: none !important; }
+        }
+
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 1rem; }
             .level-grid { grid-template-columns: 1fr; }
             .options-grid { grid-template-columns: 1fr; }
             .test-paper { padding: 1.5rem; }
             .exam-timer-banner { top: 120px; font-size: 1rem; }
+            .cert-main-title { font-size: 2.2rem; }
+            .cert-student-name { font-size: 1.8rem; }
+            .cert-logo-badge { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; }
+            .certificate-container-box { height: auto; min-height: 500px; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" onclick="showView('homeView')"><span>📐</span> Maths KH</div>
+        <div class="logo" id="mainWebsiteLogo" onclick="showView('homeView')"><span>📐</span> Maths KH</div>
         <div id="navButtons"></div>
     </header>
 
-    <!-- LED Dynamic Announcement Text Banner -->
     <div class="led-container" id="ledBannerContainer">
         <span class="led-marquee" id="ledMarqueeText"></span>
     </div>
@@ -335,11 +517,11 @@
                 <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">បង្កើតគណនីថ្មី</h2>
                 <div class="form-group">
                     <label>ឈ្មោះពេញ (Full Name)</label>
-                    <input type="text" id="regFullName" placeholder="ឧទាហរណ៍៖ សុខ សាន្ត">
+                    <input type="text" id="regFullName" placeholder="ឧទហរណ៍៖ សុខ សាន្ត">
                 </div>
                 <div class="form-group">
                     <label>ឈ្មោះអ្នកប្រើប្រាស់ (Username)</label>
-                    <input type="text" id="regUser" placeholder="ឧទាហរណ៍៖ sok123">
+                    <input type="text" id="regUser" placeholder="ឧទហរណ៍៖ sok123">
                 </div>
                 <div class="form-group">
                     <label>លេខសម្ងាត់ (Password)</label>
@@ -368,12 +550,12 @@
                 
                 <div class="form-group">
                     <label>ចំណងជើងវិញ្ញាសា (Test Title)</label>
-                    <input type="text" id="testTitle" placeholder="ឧទាហរណ៍៖ វិញ្ញាសាទី១">
+                    <input type="text" id="testTitle" placeholder="ឧទហរណ៍៖ វិញ្ញាសាទី១">
                 </div>
 
                 <div class="form-group">
                     <label>រយៈពេលប្រឡងសរុប (នាទី) - Total Exam Time (Mins)</label>
-                    <input type="number" id="examTimeLimit" placeholder="ឧទាហរណ៍៖ ៦០" min="1">
+                    <input type="number" id="examTimeLimit" placeholder="ឧទហរណ៍៖ ៦០" min="1">
                 </div>
 
                 <div id="exercisesFormWrapper"></div>
@@ -392,10 +574,9 @@
                 
                 <div style="display: flex; flex-direction: column;">
 
-                    <!-- Admin Configurable LED Control Settings Panel -->
                     <div class="settings-category" id="adminLedSettingsPanel" style="display: none; border: 2px dashed #007bff; background: rgba(0, 123, 255, 0.02);">
                         <div class="settings-category-header">
-                            <h3 style="color: #007bff;">📢 ការកំណត់អត្ថបទ LED (Admin LED Banner Controls)</h3>
+                            <h3 style="color: #007bff;">📢 การកំណត់អត្ថបទ LED (Admin LED Banner Controls)</h3>
                         </div>
                         <div class="form-group">
                             <label>អត្ថបទជូនដំណឹង LED (LED Custom Text)</label>
@@ -412,6 +593,38 @@
                             </div>
                         </div>
                         <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveLedSettings()">រក្សាទុកការកំណត់ LED (Save LED Settings)</button>
+                    </div>
+
+                    <div class="settings-category" id="adminCertificateSettingsPanel" style="display: none; border: 2px dashed #d4af37; background: rgba(212, 175, 55, 0.02);">
+                        <div class="settings-category-header">
+                            <h3 style="color: #b8972f;">📜 ការកំណត់លិខិតសរសើរ (Admin Certificate Settings)</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>បញ្ចូលរូបភាពផ្ទៃខាងក្រោយលិខិតសរសើរ (Upload boarder.png certificate)</label>
+                            <input type="file" id="inputCertBorderFile" accept="image/*" style="margin-bottom: 10px;">
+                            <label>តំណភ្ជាប់ឡូហ្គោលិខិតសរសើរ (Certificate Logo Image URL / Upload Logo.png)</label>
+                            <input type="text" id="inputCertLogoUrl" placeholder="https://example.com/logo.png" style="margin-bottom: 10px;">
+                            <input type="file" id="inputCertLogoFile" accept="image/*" style="margin-bottom: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label>អត្ថបទបរិយាយរួម (Certificate Text Template)</label>
+                            <textarea id="inputCertDescription" placeholder="សូមអរគុណចំពោះខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>បញ្ចូលរូបភាពហត្ថលេខា (Upload Signature.png)</label>
+                            <input type="file" id="inputCertSigFile" accept="image/*" style="margin-bottom: 10px;">
+                            <label>ហត្ថលេខា / ឈ្មោះស្ថាប័ន (Signature Text)</label>
+                            <input type="text" id="inputCertSignature" placeholder="Maths KH">
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 10px; background: linear-gradient(45deg, #d4af37, #b8972f);" onclick="saveCertificateSettings()">រក្សាទុកការកំណត់លិខិតសរសើរ (Save Certificate Config)</button>
+                    </div>
+
+                    <div class="settings-category" id="studentCertificatesPanel" style="display: none;">
+                        <div class="settings-category-header">
+                            <h3>📜 លិខិតសរសើររបស់អ្នក (Your Certificates)</h3>
+                        </div>
+                        <div id="studentCertificatesContainer" style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                            </div>
                     </div>
                     
                     <div class="settings-category">
@@ -470,7 +683,7 @@
                 <div class="form-group">
                     <label>លេខសម្ងាត់ថ្មី (New Password) <br><small style="color:gray; font-weight:normal;">ទុកទទេប្រសិនបើមិនចង់ប្តូរ (Leave blank to keep current)</small></label>
                     <div class="password-wrapper">
-                        <input type="password" id="editPass" placeholder="បញ្ចូលលេខសម្ងាត់ថ្មី">
+                        <input type="password" id="editPass">
                         <span class="toggle-password" onclick="togglePassword('editPass', this)">👁️</span>
                     </div>
                 </div>
@@ -507,6 +720,37 @@
 
     </div>
 
+    <div id="studentCertificateModal" class="certificate-overlay">
+        <div class="certificate-modal-wrapper">
+            <div class="certificate-container-box" id="certificateCaptureArea">
+                <div class="certificate-outer-border"></div>
+                <div class="cert-logo-badge" id="certLogoContainer">Logo</div>
+                
+                <h1 class="cert-main-title">លិខិតសរសើរ</h1>
+                <h3 class="cert-given-to">ជូនចំពោះ៖</h3>
+                <h2 class="cert-student-name" id="certStudentNameDisplay">នាង នី</h2>
+                <div class="cert-divider-line"></div>
+                
+                <p class="cert-description" id="certDescriptionDisplay">
+                    សូមអរគុណចំពោះខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅ <span id="certAppTitle">Website Maths KH</span> ដែលទទួលបាននិទ្ទេស... <strong id="certGradeText" style="color: #ff8f00; font-size: 1.6rem;"></strong>
+                </p>
+                
+                <div class="cert-footer-signature">
+                    <div class="cert-sig-img-container" id="certSigImgContainer"></div>
+                    <div class="cert-sig-line" id="certSignatureDisplay">Maths KH</div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <!-- Expanded UI controls mapping clean separate buttons for PDF and PNG files -->
+            <div class="cert-action-btns" style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-info" onclick="window.print()">🖨️ បោះពុម្ភ (Print Certificate)</button>
+                <button class="btn" style="background: linear-gradient(45deg, #11998e, #38ef7d);" onclick="saveCertificateAsPNG()">🖼️ រក្សាទុកជា PNG</button>
+                <button class="btn" style="background: linear-gradient(45deg, #024b80, #007bff);" onclick="saveCertificateAsPDF()">📄 រក្សាទុកជា PDF (A4 Landscape)</button>
+                <button class="btn btn-danger" onclick="document.getElementById('studentCertificateModal').style.display='none'">បិទចោល (Close)</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- Database & State ---
         let users = JSON.parse(localStorage.getItem('mathskh_users')) || [{ username: 'admin', password: '1234', role: 'admin', fullName: 'អ្នកគ្រប់គ្រង (Admin)' }];
@@ -528,6 +772,16 @@
             text: "Maths KH សូមស្វាគមន៍! សូមចូលទៅពង្រឹងចំណេះដឹង និងប្រលងសាកល្បងដើម្បីរង្វាយតម្លៃសមត្ថភាពខ្លួនដែលបានរៀនកន្លងមក។ សូមអរគុណ!",
             textColor: "#ffffff",
             bgColor: "#ff0000"
+        };
+
+        // Admin Customizable Certificate States
+        let globalCertSettings = JSON.parse(localStorage.getItem('mathskh_certSettings')) || {
+            logoUrl: "",
+            logoData: "",
+            borderData: "",
+            sigData: "",
+            descriptionTemplate: "សូមអរគុណចំពោះការខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅប្រព័ន្ធជំនួយការសិក្សា ដែលទទួលបានលទ្ធផលជាទីគាប់ចិត្ត ជាមួយនឹងនិទ្ទេសខ្ពស់សាកសមនឹងសមត្ថភាពពិតប្រាកដ។",
+            signature: "គណៈគ្រប់គ្រង Maths KH"
         };
 
         // Dynamic System Details mapping
@@ -574,6 +828,59 @@
             alert("ការកំណត់ LED រក្សាទុកជោគជ័យ! (LED text configuration saved successfully!)");
         }
 
+        // Synchronize Website Header Logo with Admin Certificate Logo Settings
+        function syncWebsiteHeaderLogo() {
+            const logoContainer = document.getElementById('mainWebsiteLogo');
+            if (globalCertSettings.logoData) {
+                logoContainer.innerHTML = `<img src="${globalCertSettings.logoData}" alt="Logo"> Maths KH`;
+            } else if (globalCertSettings.logoUrl) {
+                logoContainer.innerHTML = `<img src="${globalCertSettings.logoUrl}" alt="Logo"> Maths KH`;
+            } else {
+                logoContainer.innerHTML = `<span>📐</span> Maths KH`;
+            }
+        }
+
+        // --- Admin Certificate Config Engines ---
+        function saveCertificateSettings() {
+            globalCertSettings.logoUrl = document.getElementById('inputCertLogoUrl').value.trim();
+            globalCertSettings.descriptionTemplate = document.getElementById('inputCertDescription').value.trim();
+            globalCertSettings.signature = document.getElementById('inputCertSignature').value.trim();
+
+            const borderFile = document.getElementById('inputCertBorderFile').files[0];
+            const logoFile = document.getElementById('inputCertLogoFile').files[0];
+            const sigFile = document.getElementById('inputCertSigFile').files[0];
+
+            let processes = [];
+
+            if (borderFile) {
+                processes.push(new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) { globalCertSettings.borderData = e.target.result; resolve(); };
+                    reader.readAsDataURL(borderFile);
+                }));
+            }
+            if (logoFile) {
+                processes.push(new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) { globalCertSettings.logoData = e.target.result; resolve(); };
+                    reader.readAsDataURL(logoFile);
+                }));
+            }
+            if (sigFile) {
+                processes.push(new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) { globalCertSettings.sigData = e.target.result; resolve(); };
+                    reader.readAsDataURL(sigFile);
+                }));
+            }
+
+            Promise.all(processes).then(() => {
+                localStorage.setItem('mathskh_certSettings', JSON.stringify(globalCertSettings));
+                syncWebsiteHeaderLogo();
+                alert("ការកំណត់លិខិតសរសើរត្រូវបានរក្សាទុក! (Certificate layout configuration updated!)");
+            });
+        }
+
         // --- Color Palettes Selection Engine ---
         function changeColor(colorName) {
             document.body.className = '';
@@ -591,7 +898,7 @@
         }
 
         // --- Navigation ---
-        function init() { loadSavedColor(); renderLedBanner(); updateNav(); showView('homeView'); }
+        function init() { loadSavedColor(); renderLedBanner(); syncWebsiteHeaderLogo(); updateNav(); showView('homeView'); }
 
         function showView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -629,18 +936,50 @@
             document.getElementById('detLevels').innerText = appDetails.levels;
             document.getElementById('detVersion').innerText = appDetails.version;
 
+            // Render saved student certificates inside settings layout
+            const certPanel = document.getElementById('studentCertificatesPanel');
+            const certContainer = document.getElementById('studentCertificatesContainer');
+            
+            if (currentUser.role !== 'admin') {
+                certPanel.style.display = 'block';
+                certContainer.innerHTML = '';
+                
+                let savedCerts = currentUser.certificates || [];
+                if (savedCerts.length === 0) {
+                    certContainer.innerHTML = '<p style="opacity: 0.6; font-style: italic;">មិនទាន់មានលិខិតសរសើរនៅឡើយទេ (No certificates earned yet)</p>';
+                } else {
+                    savedCerts.forEach(c => {
+                        certContainer.innerHTML += `
+                            <button class="cert-badge-btn" onclick="generateStudentCertificate('${c.grade}', '${c.testTitle.replace(/'/g, "\\'")}')">
+                                <span class="badge-icon">${c.grade}</span>
+                                <span>${c.testTitle}</span>
+                            </button>
+                        `;
+                    });
+                }
+            } else {
+                certPanel.style.display = 'none';
+            }
+
             // Admin only tools mapping
             if (currentUser.role === 'admin') {
                 document.getElementById('btnEditAppDetails').style.display = 'inline-block';
                 document.getElementById('adminLedSettingsPanel').style.display = 'block';
+                document.getElementById('adminCertificateSettingsPanel').style.display = 'block';
                 
                 // Initialize admin LED form controls
                 document.getElementById('inputLedText').value = ledSettings.text;
                 document.getElementById('inputLedTextColor').value = ledSettings.textColor;
                 document.getElementById('inputLedBgColor').value = ledSettings.bgColor;
+
+                // Initialize admin Certificate configuration fields
+                document.getElementById('inputCertLogoUrl').value = globalCertSettings.logoUrl || "";
+                document.getElementById('inputCertDescription').value = globalCertSettings.descriptionTemplate || "";
+                document.getElementById('inputCertSignature').value = globalCertSettings.signature || "";
             } else {
                 document.getElementById('btnEditAppDetails').style.display = 'none';
                 document.getElementById('adminLedSettingsPanel').style.display = 'none';
+                document.getElementById('adminCertificateSettingsPanel').style.display = 'none';
             }
 
             // Highlights current color selection
@@ -736,9 +1075,13 @@
                 return;
             }
             
-            users.push({ fullName: fullName, username: user, password: pass, role: 'student' });
+            const newStudent = { fullName: fullName, username: user, password: pass, role: 'student', certificates: [] };
+            users.push(newStudent);
             localStorage.setItem('mathskh_users', JSON.stringify(users));
-            alert("បង្កើតគណនីជោគជ័យ! សូមចូលគណនី (Account created successfully! Please login.)");
+            
+            // Auto-login newly registered account instantly and forward them to page directly
+            currentUser = newStudent;
+            localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
             
             document.getElementById('regFullName').value = '';
             document.getElementById('regUser').value = '';
@@ -746,7 +1089,8 @@
             document.getElementById('regVerifyPass').value = '';
             errorEl.style.display = 'none';
 
-            showView('authView');
+            updateNav();
+            showView('homeView');
         }
 
         function login() {
@@ -814,9 +1158,10 @@
             }
         }
 
+        // --- Admin Form Control Methods ---
         function clearAdminForm() {
             let count = tests.filter(t => t.level === currentLevel).length + 1;
-            document.getElementById('testTitle').value = `វិញ្ញាសាទី ${count}`;
+            document.getElementById('testTitle').value = `វិញ្ញាសาទី ${count}`;
             document.getElementById('examTimeLimit').value = '';
             
             const container = document.getElementById('exercisesFormWrapper');
@@ -904,7 +1249,6 @@
             `;
         }
 
-        // The remaining original layout/functions are completely untouched
         function addExerciseField() {
             const container = document.getElementById('exercisesFormWrapper');
             const uid = 'uid_' + Date.now() + Math.random().toString(36).substr(2, 5);
@@ -1325,6 +1669,146 @@
 
             currentStudentQuestionIndex = 0;
             updateStudentQuestionVisibility();
+
+            // Check if student successfully completed test with passing Grades A, B, or C
+            if (grade === 'A' || grade === 'B' || grade === 'C') {
+                if (!currentUser.certificates) currentUser.certificates = [];
+                
+                // Prevent duplicate certificates for the same test code block
+                if (!currentUser.certificates.some(c => c.testId === currentActiveExam.id)) {
+                    currentUser.certificates.push({
+                        testId: currentActiveExam.id,
+                        testTitle: currentActiveExam.title,
+                        grade: grade,
+                        date: new Date().toLocaleDateString('km-KH')
+                    });
+                    
+                    // Sync up user changes to local databases safely
+                    const uIdx = users.findIndex(u => u.username === currentUser.username);
+                    if(uIdx !== -1) {
+                        users[uIdx].certificates = currentUser.certificates;
+                        localStorage.setItem('mathskh_users', JSON.stringify(users));
+                    }
+                    localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
+                }
+
+                setTimeout(() => {
+                    generateStudentCertificate(grade, currentActiveExam.title);
+                }, 800);
+            }
+        }
+
+        // Logic handler to render elegant passing certificate with admin customization parameters
+        function generateStudentCertificate(gradeLetter, testTitle = "វិញ្ញាសាគណិតវិទ្យា") {
+            window.currentViewingCertTitle = testTitle;
+            const studentName = currentUser.fullName || currentUser.username;
+            const captureArea = document.getElementById('certificateCaptureArea');
+
+            captureArea.innerHTML = `
+                <div class="certificate-outer-border"></div>
+                <div class="cert-logo-badge" id="certLogoContainer">Logo</div>
+                
+                <h1 class="cert-main-title">លិខិតសរសើរ</h1>
+                <h3 class="cert-given-to">ជូនចំពោះ៖</h3>
+                <h2 class="cert-student-name" id="certStudentNameDisplay"></h2>
+                <div class="cert-divider-line"></div>
+                
+                <p class="cert-description" id="certDescriptionDisplay"></p>
+                
+                <div class="cert-footer-signature">
+                    <div class="cert-sig-img-container" id="certSigImgContainer"></div>
+                    <div class="cert-sig-line" id="certSignatureDisplay"></div>
+                </div>
+                <div style="clear: both;"></div>
+            `;
+
+            document.getElementById('certStudentNameDisplay').innerText = studentName;
+
+            if (globalCertSettings.borderData) {
+                captureArea.style.backgroundImage = `url('${globalCertSettings.borderData}')`;
+            } else {
+                captureArea.style.backgroundImage = 'none';
+            }
+
+            const logoBox = document.getElementById('certLogoContainer');
+            if (globalCertSettings.logoData) {
+                logoBox.innerHTML = `<img src="${globalCertSettings.logoData}" alt="Logo">`;
+            } else if (globalCertSettings.logoUrl) {
+                logoBox.innerHTML = `<img src="${globalCertSettings.logoUrl}" alt="Logo">`;
+            } else {
+                logoBox.innerText = "Logo";
+            }
+
+            if (globalCertSettings.descriptionTemplate) {
+                document.getElementById('certDescriptionDisplay').innerHTML = `${globalCertSettings.descriptionTemplate} លើវិញ្ញាសា <strong>«${testTitle}»</strong> ទទួលបាន <strong style="color: #ff8f00; font-size: 1.6rem;">និទ្ទេស៖ ${gradeLetter}</strong>`;
+            }
+
+            const sigContainer = document.getElementById('certSigImgContainer');
+            if (globalCertSettings.sigData) {
+                sigContainer.innerHTML = `<img src="${globalCertSettings.sigData}" alt="Signature Image">`;
+                sigContainer.style.display = 'flex';
+            } else {
+                sigContainer.innerHTML = '';
+                sigContainer.style.display = 'none';
+            }
+
+            document.getElementById('certSignatureDisplay').innerText = globalCertSettings.signature || "Maths KH";
+            
+            document.getElementById('studentCertificateModal').style.display = 'block';
+        }
+
+        // Modern rendering engine to convert certificate elements directly to PNG layout format 
+        function saveCertificateAsPNG() {
+            const captureArea = document.getElementById('certificateCaptureArea');
+            
+            // Generate canvas layer with custom configuration rules 
+            html2canvas(captureArea, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 3, // Boost crisp pixel density ratios
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.download = (window.currentViewingCertTitle || 'certificate') + '.png';
+                downloadAnchor.href = canvas.toDataURL('image/png', 1.0);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                document.body.removeChild(downloadAnchor);
+            }).catch(err => {
+                console.error("PNG conversion exception triggered: ", err);
+                alert("មិនអាចរក្សាទុកជារូបភាពបានទេ សូមព្យាយាមម្ដងទៀត!");
+            });
+        }
+
+        // Modern rendering engine to construct A4 Landscape sized PDF asset elements client-side
+        function saveCertificateAsPDF() {
+            const { jsPDF } = window.jspdf;
+            const captureArea = document.getElementById('certificateCaptureArea');
+
+            html2canvas(captureArea, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 3, 
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png', 1.0);
+                
+                // Define global variables mapping landscape layout criteria metrics (297mm x 210mm)
+                const docPdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Apply scaled vector mappings across the active document viewport boundaries
+                docPdf.addImage(imgData, 'PNG', 0, 0, 297, 210);
+                docPdf.save((window.currentViewingCertTitle || 'certificate') + '.pdf');
+            }).catch(err => {
+                console.error("PDF generation engine exception: ", err);
+                alert("មិនអាចបង្កើតឯកសារ PDF បានទេ សូមព្យាយាមម្ដងទៀត!");
+            });
         }
 
         function exitExamView() {
