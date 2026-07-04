@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths KH - ឌីប្លូម & បាក់ឌុប</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #024b80;
+            --secondary: #007bff;
+            --bg-color: #f4f7f6;
+            --text-dark: #2c3e50;
+            --card-bg: #ffffff;
+            --header-gradient: linear-gradient(135deg, #024b80, #007bff);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Battambang', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Attractive 5 Colors Configuration --- */
+        body.color-navy {
+            --primary: #0f2027;
+            --secondary: #203a43;
+            --bg-color: #f0f4f8;
+            --text-dark: #2c3e50;
+            --card-bg: #ffffff;
+            --header-gradient: linear-gradient(135deg, #0f2027, #2c5364);
+        }
+        body.color-emerald {
+            --primary: #0d5257;
+            --secondary: #11998e;
+            --bg-color: #f1f7f6;
+            --text-dark: #233331;
+            --card-bg: #ffffff;
+            --header-gradient: linear-gradient(135deg, #0d5257, #38ef7d);
+        }
+        body.color-purple {
+            --primary: #4a148c;
+            --secondary: #7b1fa2;
+            --bg-color: #f5f0f9;
+            --text-dark: #261c2c;
+            --card-bg: #ffffff;
+            --header-gradient: linear-gradient(135deg, #4a148c, #9c27b0);
+        }
+        body.color-sunset {
+            --primary: #b71c1c;
+            --secondary: #e65100;
+            --bg-color: #fffaf4;
+            --text-dark: #3e2723;
+            --card-bg: #ffffff;
+            --header-gradient: linear-gradient(135deg, #e65100, #ff8f00);
+        }
+        body.color-charcoal {
+            --primary: #1a1a24;
+            --secondary: #4f5d75;
+            --bg-color: #1a1a24;
+            --text-dark: #efefef;
+            --card-bg: #2d3142;
+            --header-gradient: linear-gradient(135deg, #0d0d11, #4f5d75);
+        }
+
+        /* Color Palettes Buttons */
+        .theme-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .theme-btn {
+            padding: 15px 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.2s;
+            background: #fff;
+            color: #333;
+        }
+        .theme-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .theme-btn.active { border-color: var(--secondary); background: #e3f2fd; color: #0d47a1; }
+
+        header {
+            background: var(--header-gradient);
+            color: white; padding: 1rem 2rem; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;
+            transition: background 0.3s ease;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .logo img { max-height: 40px; border-radius: 50%; object-fit: cover; }
+
+        /* LED Text Banner Styles */
+        .led-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .led-marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: led-scroll 25s linear infinite;
+        }
+
+        .led-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes led-scroll {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #11998e, #38ef7d); color: white; border: none;
+            padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+        .btn-danger { background: linear-gradient(45deg, #ff416c, #ff4b2b); }
+        .btn-info { background: linear-gradient(45deg, #2193b0, #6dd5ed); }
+        .btn-outline { background: transparent; border: 2px solid white; box-shadow: none; }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+
+        .view-section { display: none; animation: fadeIn 0.4s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Animated Level Cards --- */
+        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 700px; margin: 3rem auto; }
+        
+        .level-card {
+            background: var(--card-bg); border-radius: 20px; padding: 2.5rem 1rem; text-align: center;
+            cursor: pointer; position: relative; overflow: hidden; z-index: 1;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .level-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; transition: opacity 0.4s ease; opacity: 0;
+        }
+        .level-card:hover { transform: translateY(-12px) scale(1.03); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .level-card:hover::before { opacity: 1; }
+        
+        .level-diploma { border: 2px solid #f6d365; color: #f39c12; }
+        .level-diploma::before { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
+        .level-diploma:hover { color: white; border-color: transparent; }
+        
+        .level-bac2 { border: 2px solid #a18cd1; color: #8e44ad; }
+        .level-bac2::before { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+        .level-bac2:hover { color: white; border-color: transparent; }
+
+        .level-icon { font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .level-title { font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .level-subtitle { font-size: 1.1rem; opacity: 0.9; }
+
+        /* --- Test List Items --- */
+        .test-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; max-width: 800px; margin-inline: auto; }
+        .test-item-container {
+            display: flex; align-items: stretch; background: var(--card-bg); border: 2px solid #e1e8ed;
+            border-radius: 12px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .test-item-container:hover { border-color: var(--secondary); box-shadow: 0 8px 20px rgba(0,123,255,0.1); transform: translateY(-3px); }
+        
+        .btn-test-main {
+            flex: 1; padding: 1.2rem; background: transparent; border: none; font-size: 1.2rem;
+            color: var(--primary); text-align: left; cursor: pointer; font-weight: bold;
+        }
+        .btn-test-main:hover { background: rgba(2, 75, 128, 0.03); }
+        
+        .admin-controls { display: flex; }
+        .btn-icon { background: #f8f9fa; border: none; border-left: 1px solid #e1e8ed; padding: 0 20px; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
+        .btn-edit { color: #f39c12; } .btn-edit:hover { background: #fef5e7; }
+        .btn-del { color: #e74c3c; } .btn-del:hover { background: #fdedec; }
+        
+        .btn-add-test { width: 100%; padding: 1.2rem; background: #e8f5e9; color: #2e7d32; border: 2px dashed #4caf50; border-radius: 12px; font-size: 1.2rem; cursor: pointer; font-weight: bold; transition: 0.2s; margin-top: 1rem; }
+        .btn-add-test:hover { background: #c8e6c9; }
+
+        /* --- Forms & Modals --- */
+        .form-container { background: var(--card-bg); padding: 2.5rem; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); margin: 0 auto; }
+        .form-container.large { max-width: 900px; }
+        .form-container.small { max-width: 500px; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--primary); }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccd1d9; border-radius: 8px; font-size: 1rem; font-family: inherit; transition: border 0.3s; background: #fff; color: #333; }
+        body.color-charcoal input, body.color-charcoal select, body.color-charcoal textarea { background: #1a1a24; color: #fff; border-color: #4f5d75; }
+        input:focus, textarea:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* Password Input Wrapper for Eye Icon */
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper input { padding-right: 40px; }
+        .toggle-password { position: absolute; right: 10px; cursor: pointer; user-select: none; font-size: 1.2rem; color: #666; }
+
+        /* Preview Box */
+        .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.02); border: 2px dashed #aab2bd; border-radius: 8px; min-height: 60px; white-space: pre-wrap; font-size: 1.1rem; color: inherit; }
+        .preview-box-small { margin-top: 5px; padding: 8px; background: rgba(0,0,0,0.02); border: 1px dashed #aab2bd; border-radius: 6px; min-height: 40px; font-size: 1rem; color: inherit; }
+        .preview-label { font-size: 0.9rem; color: var(--secondary); font-weight: bold; margin-bottom: 5px; margin-top: 10px; display: flex; justify-content: space-between; }
+        
+        .katex-link { font-size: 0.9rem; color: #ff6b6b; text-decoration: none; font-weight: normal; }
+        .katex-link:hover { text-decoration: underline; }
+
+        /* Image Preview Box */
+        .url-preview-img { max-width: 100%; max-height: 300px; border-radius: 8px; margin-top: 10px; display: none; object-fit: contain; }
+
+        /* --- Test Paper Display --- */
+        .test-paper { background: var(--card-bg); padding: 3rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .exercise-block { display: none; border-bottom: 2px dashed #e1e8ed; padding-bottom: 2rem; margin-bottom: 2rem; position: relative; }
+        .exercise-block.active { display: block; border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+        .option-item { background: rgba(0,0,0,0.02); border: 2px solid #e1e8ed; border-radius: 10px; padding: 1.2rem; cursor: pointer; transition: 0.2s; font-size: 1.1rem; color: inherit; }
+        .option-item:hover { border-color: var(--secondary); background: rgba(255,255,255,0.05); }
+        .option-item.correct-highlight { border-color: #4caf50; background: #e8f5e9; color: #333; }
+        .option-item.selected-highlight { border-color: var(--secondary); background: #e3f2fd; font-weight: bold; color: #0d47a1; }
+        .option-item.wrong-highlight { border-color: #e74c3c; background: #fdedec; color: #333; }
+
+        .answer-box { display: none; margin-top: 2rem; padding: 2rem; background: rgba(76, 175, 80, 0.1); border-left: 6px solid #8bc34a; border-radius: 8px; color: inherit; }
+        .error-msg { color: #e74c3c; text-align: center; margin-top: 15px; display: none; font-weight: bold; }
+
+        /* --- Settings Category Styling --- */
+        .settings-category { background: rgba(0,0,0,0.02); border: 1px solid #e1e8ed; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; color: inherit; }
+        .settings-category-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 1rem; padding-bottom: 10px; }
+        .settings-category-header h3 { color: var(--secondary); margin: 0; }
+        .settings-category p { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .btn-edit-small { color: var(--secondary); border: 1px solid var(--secondary); background: transparent; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-edit-small:hover { background: var(--secondary); color: white; }
+
+        /* Certificate buttons style in settings */
+        .cert-badge-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #fff7e6, #fff);
+            border: 2px solid #d4af37;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #b8972f;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .cert-badge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2);
+            background: linear-gradient(135deg, #d4af37, #b8972f);
+            color: #fff;
+        }
+        .cert-badge-btn .badge-icon {
+            background: #d4af37;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .cert-badge-btn:hover .badge-icon {
+            background: white;
+            color: #b8972f;
+        }
+
+        /* --- Exercise Wrapper Box Inside Form --- */
+        .exercise-form-block { background: rgba(0,0,0,0.02); border: 2px solid #e1e8ed; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; position: relative; color: inherit; }
+
+        .meta-display-student { display: flex; justify-content: space-between; font-weight: bold; font-size: 0.95rem; margin-bottom: 10px; color: #7f8c8d; }
+
+        /* --- Exam Timer & Result Banner --- */
+        .exam-timer-banner { background: #e3f2fd; border-left: 6px solid #1e88e5; padding: 1rem; border-radius: 8px; font-size: 1.2rem; font-weight: bold; color: #0d47a1; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 70px; z-index: 99; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .exam-results-card { background: #fffde7; border: 2px solid #fff59d; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #333; }
+        .exam-results-title { font-size: 1.8rem; font-weight: bold; color: #f57f17; margin-bottom: 1rem; }
+        .exam-grade-badge { display: inline-block; font-size: 3rem; font-weight: bold; background: #fbc02d; color: white; padding: 0.5rem 2rem; border-radius: 50px; margin-top: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+
+        /* --- Elegant White and Gold Student Certificate Overlay --- */
+        .certificate-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .certificate-modal-wrapper {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .certificate-container-box {
+            position: relative;
+            background: #ffffff;
+            border: 4px double #d4af37;
+            padding: 45px;
+            color: #2c3e50;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.2);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        .certificate-outer-border {
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px solid #d4af37;
+            pointer-events: none;
+        }
+        .cert-logo-badge {
+            position: absolute;
+            top: 35px; left: 45px;
+            width: 80px; height: 80px;
+            border: 2px solid #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #024b80;
+            overflow: hidden;
+            background: #fff;
+        }
+        .cert-logo-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cert-main-title {
+            font-size: 3.5rem;
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-underline-offset: 8px;
+        }
+        .cert-given-to {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+        }
+        .cert-student-name {
+            font-size: 2.8rem;
+            color: #d4af37;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .cert-divider-line {
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+            margin: 15px auto;
+        }
+        .cert-description {
+            font-size: 1.35rem;
+            color: #024b80;
+            line-height: 2;
+            max-width: 80%;
+            margin: 20px auto;
+        }
+        .cert-footer-signature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 15px;
+            padding-right: 40px;
+            float: right;
+        }
+        .cert-sig-img-container {
+            width: 150px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+        .cert-sig-img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .cert-sig-line {
+            width: 200px;
+            border-top: 1px solid #7f8c8d;
+            padding-top: 5px;
+            font-size: 1.1rem;
+            color: #024b80;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            .certificate-overlay, .certificate-overlay * { visibility: visible; }
+            .certificate-overlay { position: absolute; left: 0; top: 0; width: 100%; background: none; padding: 0; }
+            .certificate-modal-wrapper { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+            .cert-action-btns { display: none !important; }
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 1rem; }
+            .level-grid { grid-template-columns: 1fr; }
+            .options-grid { grid-template-columns: 1fr; }
+            .test-paper { padding: 1.5rem; }
+            .exam-timer-banner { top: 120px; font-size: 1rem; }
+            .cert-main-title { font-size: 2.2rem; }
+            .cert-student-name { font-size: 1.8rem; }
+            .cert-logo-badge { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" id="mainWebsiteLogo" onclick="showView('homeView')"><span>📐</span> Maths KH</div>
+        <div id="navButtons"></div>
+    </header>
+
+    <div class="led-container" id="ledBannerContainer">
+        <span class="led-marquee" id="ledMarqueeText"></span>
+    </div>
+
+    <div class="container">
+        
+        <div id="homeView" class="view-section active">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2rem;">ជ្រើសរើសកម្រិតសិក្សា</h2>
+            <div class="level-grid">
+                <div class="level-card level-diploma" onclick="openLevel('Diploma')">
+                    <div class="level-icon">🎓</div>
+                    <div class="level-title">ឌីប្លូម</div>
+                    <div class="level-subtitle">ថ្នាក់ទី ៩ (Diploma)</div>
+                </div>
+                <div class="level-card level-bac2" onclick="openLevel('Bac II')">
+                    <div class="level-icon">🏛️</div>
+                    <div class="level-title">បាក់ឌុប</div>
+                    <div class="level-subtitle">ថ្នាក់ទី ១២ (Bac II)</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="testListView" class="view-section">
+            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="showView('homeView')">← ត្រឡប់ក្រោយ</button>
+            <h2 id="levelTitle" style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;"></h2>
+            <div id="testGrid" class="test-grid"></div>
+        </div>
+
+        <div id="doTestView" class="view-section">
+            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="exitExamView()">← ត្រឡប់ទៅបញ្ជីវិញ្ញាសា</button>
+            <div id="examTimerContainer"></div>
+            <div id="examResultsContainer"></div>
+            <div class="test-paper" id="testPaperContent"></div>
+        </div>
+
+        <div id="authView" class="view-section">
+            <div class="form-container small">
+                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary);">ចូលគណនី</h2>
+                <div class="form-group">
+                    <label>ឈ្មោះអ្នកប្រើប្រាស់ (Username)</label>
+                    <input type="text" id="loginUser">
+                </div>
+                <div class="form-group">
+                    <label>លេខសម្ងាត់ (Password)</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPass">
+                        <span class="toggle-password" onclick="togglePassword('loginPass', this)">👁️</span>
+                    </div>
+                </div>
+                <button class="btn" style="width: 100%; margin-bottom: 10px;" onclick="login()">ចូល (Login)</button>
+                <button class="btn btn-info" style="width: 100%;" onclick="showView('registerView')">បង្កើតគណនីថ្មី (Register)</button>
+                <p id="authError" class="error-msg">ព័ត៌មានមិនត្រឹមត្រូវ!</p>
+            </div>
+        </div>
+
+        <div id="registerView" class="view-section">
+            <div class="form-container small">
+                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">បង្កើតគណនីថ្មី</h2>
+                <div class="form-group">
+                    <label>ឈ្មោះពេញ (Full Name)</label>
+                    <input type="text" id="regFullName" placeholder="ឧទហរណ៍៖ សុខ សាន្ត">
+                </div>
+                <div class="form-group">
+                    <label>ឈ្មោះអ្នកប្រើប្រាស់ (Username)</label>
+                    <input type="text" id="regUser" placeholder="ឧទហរណ៍៖ sok123">
+                </div>
+                <div class="form-group">
+                    <label>លេខសម្ងាត់ (Password)</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regPass" placeholder="បញ្ចូលលេខសម្ងាត់">
+                        <span class="toggle-password" onclick="togglePassword('regPass', this)">👁️</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>បញ្ជាក់លេខសម្ងាត់ (Verify Password)</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regVerifyPass" placeholder="បញ្ចូលលេខសម្ងាត់ម្តងទៀត">
+                        <span class="toggle-password" onclick="togglePassword('regVerifyPass', this)">👁️</span>
+                    </div>
+                </div>
+                <button class="btn btn-info" style="width: 100%; margin-bottom: 10px;" onclick="register()">បង្កើតគណនី</button>
+                <button class="btn btn-outline" style="width: 100%; color: var(--primary); border-color: #ddd;" onclick="showView('authView')">ត្រឡប់ទៅចូលគណនី (Back to Login)</button>
+                <p id="regError" class="error-msg"></p>
+            </div>
+        </div>
+
+        <div id="adminAddTestView" class="view-section">
+            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="cancelEdit()">← បោះបង់ (Cancel)</button>
+            <div class="form-container large">
+                <h2 id="adminFormTitle" style="text-align: center; margin-bottom: 1.5rem; color: var(--primary);">បន្ថែមវិញ្ញាសាថ្មី - <span id="addTestLevelLabel"></span></h2>
+                
+                <div class="form-group">
+                    <label>ចំណងជើងវិញ្ញាសា (Test Title)</label>
+                    <input type="text" id="testTitle" placeholder="ឧទហរណ៍៖ វិញ្ញាសាទី១">
+                </div>
+
+                <div class="form-group">
+                    <label>រយៈពេលប្រឡងសរុប (នាទី) - Total Exam Time (Mins)</label>
+                    <input type="number" id="examTimeLimit" placeholder="ឧទហរណ៍៖ ៦០" min="1">
+                </div>
+
+                <div id="exercisesFormWrapper"></div>
+
+                <div style="display: flex; gap: 15px; margin-top: 2rem;">
+                    <button class="btn" style="flex: 1; padding: 15px; font-size: 1.2rem;" onclick="saveTest(true)">រក្សាទុក (Save Test)</button>
+                    <button class="btn btn-info" style="flex: 1; padding: 15px; font-size: 1.2rem; background: linear-gradient(45deg, #f39c12, #f1c40f);" onclick="addExerciseField()">បន្ថែមលំហាត់</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settingsView" class="view-section">
+            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="showView('homeView')">← ត្រឡប់ក្រោយ (Back)</button>
+            <div class="form-container large">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">⚙️ ការកំណត់ (Settings)</h2>
+                
+                <div style="display: flex; flex-direction: column;">
+
+                    <div class="settings-category" id="adminLedSettingsPanel" style="display: none; border: 2px dashed #007bff; background: rgba(0, 123, 255, 0.02);">
+                        <div class="settings-category-header">
+                            <h3 style="color: #007bff;">📢 การកំណត់អត្ថបទ LED (Admin LED Banner Controls)</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>អត្ថបទជូនដំណឹង LED (LED Custom Text)</label>
+                            <textarea id="inputLedText" oninput="updateLedBannerLive()" placeholder="សរសេរអត្ថបទទីនេះ..."></textarea>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label>ពណ៌អក្សរ (Text Color)</label>
+                                <input type="color" id="inputLedTextColor" oninput="updateLedBannerLive()">
+                            </div>
+                            <div class="form-group">
+                                <label>ពណ៌ផ្ទៃក្រោយ (Background Color)</label>
+                                <input type="color" id="inputLedBgColor" oninput="updateLedBannerLive()">
+                            </div>
+                        </div>
+                        <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveLedSettings()">រក្សាទុកការកំណត់ LED (Save LED Settings)</button>
+                    </div>
+
+                    <div class="settings-category" id="adminCertificateSettingsPanel" style="display: none; border: 2px dashed #d4af37; background: rgba(212, 175, 55, 0.02);">
+                        <div class="settings-category-header">
+                            <h3 style="color: #b8972f;">📜 ការកំណត់លិខិតសរសើរ (Admin Certificate Settings)</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>បញ្ចូលរូបភាពផ្ទៃខាងក្រោយលិខិតសរសើរ (Upload boarder.png certificate)</label>
+                            <input type="file" id="inputCertBorderFile" accept="image/*" style="margin-bottom: 10px;">
+                            <label>តំណភ្ជាប់ឡូហ្គោលិខិតសរសើរ (Certificate Logo Image URL / Upload Logo.png)</label>
+                            <input type="text" id="inputCertLogoUrl" placeholder="https://example.com/logo.png" style="margin-bottom: 10px;">
+                            <input type="file" id="inputCertLogoFile" accept="image/*" style="margin-bottom: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label>អត្ថបទបរិយាយរួម (Certificate Text Template)</label>
+                            <textarea id="inputCertDescription" placeholder="សូមអរគុណចំពោះខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>បញ្ចូលរូបភាពហត្ថលេខា (Upload Signature.png)</label>
+                            <input type="file" id="inputCertSigFile" accept="image/*" style="margin-bottom: 10px;">
+                            <label>ហត្ថលេខា / ឈ្មោះស្ថាប័ន (Signature Text)</label>
+                            <input type="text" id="inputCertSignature" placeholder="Maths KH">
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 10px; background: linear-gradient(45deg, #d4af37, #b8972f);" onclick="saveCertificateSettings()">រក្សាទុកការកំណត់លិខិតសរសើរ (Save Certificate Config)</button>
+                    </div>
+
+                    <div class="settings-category" id="studentCertificatesPanel" style="display: none;">
+                        <div class="settings-category-header">
+                            <h3>📜 លិខិតសរសើររបស់អ្នក (Your Certificates)</h3>
+                        </div>
+                        <div id="studentCertificatesContainer" style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                            </div>
+                    </div>
+                    
+                    <div class="settings-category">
+                        <div class="settings-category-header">
+                            <h3>🎨 ពណ៌ផ្ទៃកម្មវិធី (App Color Themes)</h3>
+                        </div>
+                        <div class="theme-selector-grid">
+                            <div class="theme-btn" id="theme-navy" onclick="changeColor('navy')">🔵 Navy Blue</div>
+                            <div class="theme-btn" id="theme-emerald" onclick="changeColor('emerald')">🟢 Emerald Green</div>
+                            <div class="theme-btn" id="theme-purple" onclick="changeColor('purple')">🟣 Royal Purple</div>
+                            <div class="theme-btn" id="theme-sunset" onclick="changeColor('sunset')">🟠 Terracotta</div>
+                            <div class="theme-btn" id="theme-charcoal" onclick="changeColor('charcoal')">⚫ Deep Charcoal</div>
+                        </div>
+                    </div>
+
+                    <div class="settings-category">
+                        <div class="settings-category-header">
+                            <h3>👤 គណនី (Account)</h3>
+                            <button class="btn-edit-small" onclick="showEditProfile()">កែប្រែ (Edit)</button>
+                        </div>
+                        <p><strong>ឈ្មោះពេញ (Full Name):</strong> <span id="setFullName"></span></p>
+                        <p><strong>ឈ្មោះអ្នកប្រើប្រាស់ (Username):</strong> <span id="setUserName"></span></p>
+                        <p><strong>តួនាទី (Role):</strong> <span id="setRole"></span></p>
+                    </div>
+
+                    <div class="settings-category">
+                        <div class="settings-category-header">
+                            <h3>ℹ️ ព័ត៌មានលម្អិត (Detail)</h3>
+                            <button id="btnEditAppDetails" class="btn-edit-small" style="display: none;" onclick="showEditAppDetails()">កែប្រែ (Edit)</button>
+                        </div>
+                        <p><strong>កម្មវិធី (App):</strong> <span id="detApp"></span></p>
+                        <p><strong>មុខងារ (Features):</strong> <span id="detFeatures"></span></p>
+                        <p><strong>កម្រិតសិក្សា (Levels):</strong> <span id="detLevels"></span></p>
+                        <p><strong>កំណែ (Version):</strong> <span id="detVersion"></span></p>
+                    </div>
+
+                    <div class="settings-category" style="text-align: center; border-color: #f5b7b1;">
+                        <h3 style="color: #e74c3c; border-bottom: 2px solid #fadbd8; margin-bottom: 1rem; padding-bottom: 10px;">🚪 ចាកចេញពីគណនី (Log out)</h3>
+                        <button class="btn btn-danger" style="margin-top: 10px; padding: 12px 30px;" onclick="logout()">ចាកចេញឥឡូវនេះ (Logout Now)</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="editProfileView" class="view-section">
+            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="openSettings()">← បោះបង់ (Cancel)</button>
+            <div class="form-container small">
+                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">កែប្រែគណនី (Edit Profile)</h2>
+                
+                <div class="form-group">
+                    <label>ឈ្មោះពេញ (Full Name)</label>
+                    <input type="text" id="editFullName">
+                </div>
+                
+                <div class="form-group">
+                    <label>លេខសម្ងាត់ថ្មី (New Password) <br><small style="color:gray; font-weight:normal;">ទុកទទេប្រសិនបើមិនចង់ប្តូរ (Leave blank to keep current)</small></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="editPass">
+                        <span class="toggle-password" onclick="togglePassword('editPass', this)">👁️</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveProfile()">រក្សាទុក (Save)</button>
+            </div>
+        </div>
+
+        <div id="editAppDetailsView" class="view-section">
+            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="openSettings()">← បោះបង់ (Cancel)</button>
+            <div class="form-container small">
+                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">កែប្រែព័ត៌មានលម្អិត (Edit Details)</h2>
+                
+                <div class="form-group">
+                    <label>កម្មវិធី (App)</label>
+                    <input type="text" id="editDetApp">
+                </div>
+                <div class="form-group">
+                    <label>មុខងារ (Features)</label>
+                    <input type="text" id="editDetFeatures">
+                </div>
+                <div class="form-group">
+                    <label>កម្រិតសិក្សា (Levels)</label>
+                    <input type="text" id="editDetLevels">
+                </div>
+                <div class="form-group">
+                    <label>កំណែ (Version)</label>
+                    <input type="text" id="editDetVersion">
+                </div>
+                
+                <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveAppDetails()">រក្សាទុក (Save)</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="studentCertificateModal" class="certificate-overlay">
+        <div class="certificate-modal-wrapper">
+            <div class="certificate-container-box" id="certificateCaptureArea">
+                <div class="certificate-outer-border"></div>
+                <div class="cert-logo-badge" id="certLogoContainer">Logo</div>
+                
+                <h1 class="cert-main-title">លិខិតសរសើរ</h1>
+                <h3 class="cert-given-to">ជូនចំពោះ៖</h3>
+                <h2 class="cert-student-name" id="certStudentNameDisplay">នាង នី</h2>
+                <div class="cert-divider-line"></div>
+                
+                <p class="cert-description" id="certDescriptionDisplay">
+                    សូមអរគុណចំពោះខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅ <span id="certAppTitle">Website Maths KH</span> ដែលទទួលបាននិទ្ទេស... <strong id="certGradeText" style="color: #ff8f00; font-size: 1.6rem;"></strong>
+                </p>
+                
+                <div class="cert-footer-signature">
+                    <div class="cert-sig-img-container" id="certSigImgContainer"></div>
+                    <div class="cert-sig-line" id="certSignatureDisplay">Maths KH</div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="cert-action-btns" style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-info" onclick="window.print()">🖨️ បោះពុម្ភ (Print Certificate)</button>
+                <button class="btn" style="background: linear-gradient(45deg, #11998e, #38ef7d);" onclick="saveCertificateAsFile()">💾 រក្សាទុកលិខិតសរសើរ (Save Certificate)</button>
+                <button class="btn btn-danger" onclick="document.getElementById('studentCertificateModal').style.display='none'">បិទចោល (Close)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Database & State ---
+        let users = JSON.parse(localStorage.getItem('mathskh_users')) || [{ username: 'admin', password: '1234', role: 'admin', fullName: 'អ្នកគ្រប់គ្រង (Admin)' }];
+        let currentUser = JSON.parse(localStorage.getItem('mathskh_currentUser')) || null;
+        let currentLevel = '';
+        let editingTestId = null;
+        
+        let tests = JSON.parse(localStorage.getItem('mathskh_tests')) || [];
+
+        // Exam Runtime Tracking State
+        let examCountdownInterval = null;
+        let selectedAnswers = {}; 
+        let currentActiveExam = null;
+        let examSubmitted = false;
+        let currentStudentQuestionIndex = 0;
+
+        // Dynamic LED Marquee State Defaults
+        let ledSettings = JSON.parse(localStorage.getItem('mathskh_ledSettings')) || {
+            text: "Maths KH សូមស្វាគមន៍! សូមចូលទៅពង្រឹងចំណេះដឹង និងប្រលងសាកល្បងដើម្បីរង្វាយតម្លៃសមត្ថភាពខ្លួនដែលបានរៀនកន្លងមក។ សូមអរគុណ!",
+            textColor: "#ffffff",
+            bgColor: "#ff0000"
+        };
+
+        // Admin Customizable Certificate States
+        let globalCertSettings = JSON.parse(localStorage.getItem('mathskh_certSettings')) || {
+            logoUrl: "",
+            logoData: "",
+            borderData: "",
+            sigData: "",
+            descriptionTemplate: "សូមអរគុណចំពោះការខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅប្រព័ន្ធជំនួយការសិក្សា ដែលទទួលបានលទ្ធផលជាទីគាប់ចិត្ត ជាមួយនឹងនិទ្ទេសខ្ពស់សាកសមនឹងសមត្ថភាពពិតប្រាកដ។",
+            signature: "គណៈគ្រប់គ្រង Maths KH"
+        };
+
+        // Dynamic System Details mapping
+        let appDetails = JSON.parse(localStorage.getItem('mathskh_appDetails')) || {
+            app: 'Maths KH',
+            features: 'ធ្វើវិញ្ញាសាគណិតវិទ្យា (Math Test Practice)',
+            levels: 'ឌីប្លូម (ថ្នាក់ទី ៩) & បាក់ឌុប (ថ្នាក់ទី ១២)',
+            version: '1.0.0'
+        };
+
+        const khmerAlphabet = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ', 'ឈ', 'ញ', 'ដ', 'ឋ', 'ឌ', 'ឍ', 'ណ', 'ត', 'ថ', 'ទ', 'ធ', 'ន', 'ប', 'ផ', 'ព', 'ភ', 'ម', 'យ', 'រ', 'ល', 'វ', 'ស', 'ហ', 'ឡ', 'អ'];
+
+        const katexOptions = {
+            delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ],
+            throwOnError: false
+        };
+
+        // --- LED System Engines ---
+        function renderLedBanner() {
+            const marquee = document.getElementById('ledMarqueeText');
+            const container = document.getElementById('ledBannerContainer');
+            
+            marquee.innerText = ledSettings.text;
+            container.style.backgroundColor = ledSettings.bgColor;
+            marquee.style.color = ledSettings.textColor;
+        }
+
+        function updateLedBannerLive() {
+            const marquee = document.getElementById('ledMarqueeText');
+            const container = document.getElementById('ledBannerContainer');
+            
+            marquee.innerText = document.getElementById('inputLedText').value;
+            container.style.backgroundColor = document.getElementById('inputLedBgColor').value;
+            marquee.style.color = document.getElementById('inputLedTextColor').value;
+        }
+
+        function saveLedSettings() {
+            ledSettings.text = document.getElementById('inputLedText').value;
+            ledSettings.textColor = document.getElementById('inputLedTextColor').value;
+            ledSettings.bgColor = document.getElementById('inputLedBgColor').value;
+            
+            localStorage.setItem('mathskh_ledSettings', JSON.stringify(ledSettings));
+            renderLedBanner();
+            alert("ការកំណត់ LED រក្សាទុកជោគជ័យ! (LED text configuration saved successfully!)");
+        }
+
+        // Synchronize Website Header Logo with Admin Certificate Logo Settings
+        function syncWebsiteHeaderLogo() {
+            const logoContainer = document.getElementById('mainWebsiteLogo');
+            if (globalCertSettings.logoData) {
+                logoContainer.innerHTML = `<img src="${globalCertSettings.logoData}" alt="Logo"> Maths KH`;
+            } else if (globalCertSettings.logoUrl) {
+                logoContainer.innerHTML = `<img src="${globalCertSettings.logoUrl}" alt="Logo"> Maths KH`;
+            } else {
+                logoContainer.innerHTML = `<span>📐</span> Maths KH`;
+            }
+        }
+
+        // --- Admin Certificate Config Engines ---
+        function saveCertificateSettings() {
+            globalCertSettings.logoUrl = document.getElementById('inputCertLogoUrl').value.trim();
+            globalCertSettings.descriptionTemplate = document.getElementById('inputCertDescription').value.trim();
+            globalCertSettings.signature = document.getElementById('inputCertSignature').value.trim();
+
+            const borderFile = document.getElementById('inputCertBorderFile').files[0];
+            const logoFile = document.getElementById('inputCertLogoFile').files[0];
+            const sigFile = document.getElementById('inputCertSigFile').files[0];
+
+            let processes = [];
+
+            if (borderFile) {
+                processes.push(new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) { globalCertSettings.borderData = e.target.result; resolve(); };
+                    reader.readAsDataURL(borderFile);
+                }));
+            }
+            if (logoFile) {
+                processes.push(new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) { globalCertSettings.logoData = e.target.result; resolve(); };
+                    reader.readAsDataURL(logoFile);
+                }));
+            }
+            if (sigFile) {
+                processes.push(new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) { globalCertSettings.sigData = e.target.result; resolve(); };
+                    reader.readAsDataURL(sigFile);
+                }));
+            }
+
+            Promise.all(processes).then(() => {
+                localStorage.setItem('mathskh_certSettings', JSON.stringify(globalCertSettings));
+                syncWebsiteHeaderLogo();
+                alert("ការកំណត់លិខិតសរសើរត្រូវបានរក្សាទុក! (Certificate layout configuration updated!)");
+            });
+        }
+
+        // --- Color Palettes Selection Engine ---
+        function changeColor(colorName) {
+            document.body.className = '';
+            document.body.classList.add('color-' + colorName);
+            localStorage.setItem('mathskh_color', colorName);
+            
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById('theme-' + colorName);
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+
+        function loadSavedColor() {
+            const savedColor = localStorage.getItem('mathskh_color') || 'navy';
+            changeColor(savedColor);
+        }
+
+        // --- Navigation ---
+        function init() { loadSavedColor(); renderLedBanner(); syncWebsiteHeaderLogo(); updateNav(); showView('homeView'); }
+
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (document.getElementById('authError')) document.getElementById('authError').style.display = 'none';
+            if (document.getElementById('regError')) document.getElementById('regError').style.display = 'none';
+        }
+
+        function updateNav() {
+            const nav = document.getElementById('navButtons');
+            if (currentUser) {
+                let displayName = currentUser.fullName || currentUser.username;
+                nav.innerHTML = `
+                    <span style="color: white; margin-right: 15px; font-weight: bold;">👤 ${displayName}</span>
+                    <button class="btn btn-outline" onclick="openSettings()">⚙️ ការកំណត់ (Settings)</button>
+                `;
+            } else {
+                nav.innerHTML = `<button class="btn btn-outline" onclick="showView('authView')">ចូល / បង្កើតគណនី</button>`;
+            }
+        }
+
+        // --- Settings View Mapping ---
+        function openSettings() {
+            if (!currentUser) return;
+            
+            // Map Account Info
+            document.getElementById('setFullName').innerText = currentUser.fullName || 'មិនមាន (N/A)';
+            document.getElementById('setUserName').innerText = currentUser.username;
+            document.getElementById('setRole').innerText = currentUser.role === 'admin' ? 'អ្នកគ្រប់គ្រង (Admin)' : 'សិស្ស (Student)';
+            
+            // Map App Details
+            document.getElementById('detApp').innerText = appDetails.app;
+            document.getElementById('detFeatures').innerText = appDetails.features;
+            document.getElementById('detLevels').innerText = appDetails.levels;
+            document.getElementById('detVersion').innerText = appDetails.version;
+
+            // Render saved student certificates inside settings layout
+            const certPanel = document.getElementById('studentCertificatesPanel');
+            const certContainer = document.getElementById('studentCertificatesContainer');
+            
+            if (currentUser.role !== 'admin') {
+                certPanel.style.display = 'block';
+                certContainer.innerHTML = '';
+                
+                let savedCerts = currentUser.certificates || [];
+                if (savedCerts.length === 0) {
+                    certContainer.innerHTML = '<p style="opacity: 0.6; font-style: italic;">មិនទាន់មានលិខិតសរសើរនៅឡើយទេ (No certificates earned yet)</p>';
+                } else {
+                    savedCerts.forEach(c => {
+                        certContainer.innerHTML += `
+                            <button class="cert-badge-btn" onclick="generateStudentCertificate('${c.grade}', '${c.testTitle.replace(/'/g, "\\'")}')">
+                                <span class="badge-icon">${c.grade}</span>
+                                <span>${c.testTitle}</span>
+                            </button>
+                        `;
+                    });
+                }
+            } else {
+                certPanel.style.display = 'none';
+            }
+
+            // Admin only tools mapping
+            if (currentUser.role === 'admin') {
+                document.getElementById('btnEditAppDetails').style.display = 'inline-block';
+                document.getElementById('adminLedSettingsPanel').style.display = 'block';
+                document.getElementById('adminCertificateSettingsPanel').style.display = 'block';
+                
+                // Initialize admin LED form controls
+                document.getElementById('inputLedText').value = ledSettings.text;
+                document.getElementById('inputLedTextColor').value = ledSettings.textColor;
+                document.getElementById('inputLedBgColor').value = ledSettings.bgColor;
+
+                // Initialize admin Certificate configuration fields
+                document.getElementById('inputCertLogoUrl').value = globalCertSettings.logoUrl || "";
+                document.getElementById('inputCertDescription').value = globalCertSettings.descriptionTemplate || "";
+                document.getElementById('inputCertSignature').value = globalCertSettings.signature || "";
+            } else {
+                document.getElementById('btnEditAppDetails').style.display = 'none';
+                document.getElementById('adminLedSettingsPanel').style.display = 'none';
+                document.getElementById('adminCertificateSettingsPanel').style.display = 'none';
+            }
+
+            // Highlights current color selection
+            const currentColor = localStorage.getItem('mathskh_color') || 'navy';
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById('theme-' + currentColor);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            showView('settingsView');
+        }
+
+        // --- Edit Profile (User & Admin) ---
+        function showEditProfile() {
+            document.getElementById('editFullName').value = currentUser.fullName || '';
+            document.getElementById('editPass').value = ''; 
+            showView('editProfileView');
+        }
+
+        function saveProfile() {
+            const newName = document.getElementById('editFullName').value.trim();
+            const newPass = document.getElementById('editPass').value.trim();
+
+            if (!newName) return alert("សូមបញ្ចូលឈ្មោះពេញ! (Please enter Full Name)");
+
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            if (userIndex !== -1) {
+                users[userIndex].fullName = newName;
+                if (newPass) users[userIndex].password = newPass;
+
+                localStorage.setItem('mathskh_users', JSON.stringify(users));
+                currentUser = users[userIndex];
+                localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
+                
+                updateNav();
+                alert('កែប្រែគណនីជោគជ័យ! (Profile updated successfully!)');
+                openSettings();
+            }
+        }
+
+        // --- Edit App Details (Admin Only) ---
+        function showEditAppDetails() {
+            document.getElementById('editDetApp').value = appDetails.app;
+            document.getElementById('editDetFeatures').value = appDetails.features;
+            document.getElementById('editDetLevels').value = appDetails.levels;
+            document.getElementById('editDetVersion').value = appDetails.version;
+            showView('editAppDetailsView');
+        }
+
+        function saveAppDetails() {
+            appDetails.app = document.getElementById('editDetApp').value.trim();
+            appDetails.features = document.getElementById('editDetFeatures').value.trim();
+            appDetails.levels = document.getElementById('editDetLevels').value.trim();
+            appDetails.version = document.getElementById('editDetVersion').value.trim();
+
+            localStorage.setItem('mathskh_appDetails', JSON.stringify(appDetails));
+            alert('កែប្រែព័ត៌មានលម្អិតជោគជ័យ! (App Details updated!)');
+            openSettings();
+        }
+
+        // --- Toggle Password Visibility ---
+        function togglePassword(inputId, iconEl) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconEl.innerText = '🙈';
+            } else {
+                input.type = 'password';
+                iconEl.innerText = '👁️';
+            }
+        }
+
+        // --- Authentication ---
+        function register() {
+            const fullName = document.getElementById('regFullName').value.trim();
+            const user = document.getElementById('regUser').value.trim();
+            const pass = document.getElementById('regPass').value.trim();
+            const verifyPass = document.getElementById('regVerifyPass').value.trim();
+            const errorEl = document.getElementById('regError');
+
+            if (!fullName || !user || !pass || !verifyPass) {
+                errorEl.innerText = "សូមបំពេញព័ត៌មានឲ្យបានគ្រប់គ្រាន់!";
+                errorEl.style.display = 'block';
+                return;
+            }
+            if (pass !== verifyPass) {
+                errorEl.innerText = "លេខសម្ងាត់មិនត្រូវគ្នាទេ!";
+                errorEl.style.display = 'block';
+                return;
+            }
+            if (users.find(u => u.username.toLowerCase() === user.toLowerCase())) {
+                errorEl.innerText = "ឈ្មោះនេះមានគេប្រើហើយ!";
+                errorEl.style.display = 'block';
+                return;
+            }
+            
+            const newStudent = { fullName: fullName, username: user, password: pass, role: 'student', certificates: [] };
+            users.push(newStudent);
+            localStorage.setItem('mathskh_users', JSON.stringify(users));
+            
+            // Auto-login newly registered account instantly and forward them to page directly
+            currentUser = newStudent;
+            localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
+            
+            document.getElementById('regFullName').value = '';
+            document.getElementById('regUser').value = '';
+            document.getElementById('regPass').value = '';
+            document.getElementById('regVerifyPass').value = '';
+            errorEl.style.display = 'none';
+
+            updateNav();
+            showView('homeView');
+        }
+
+        function login() {
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            const found = users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+            
+            if (found) {
+                currentUser = found; localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
+                updateNav(); showView('homeView');
+                document.getElementById('loginUser').value = ''; document.getElementById('loginPass').value = '';
+            } else {
+                document.getElementById('authError').style.display = 'block';
+            }
+        }
+
+        function logout() { currentUser = null; localStorage.removeItem('mathskh_currentUser'); updateNav(); showView('homeView'); }
+
+        // --- Level & Test List rendering ---
+        function openLevel(level) {
+            currentLevel = level;
+            document.getElementById('levelTitle').innerText = level === 'Diploma' ? 'វិញ្ញាសាឌីប្លូម (ថ្នាក់ទី ៩)' : 'វិញ្ញាសាបាក់ឌុប (ថ្នាក់ទី ១២)';
+            renderTestList();
+            showView('testListView');
+        }
+
+        function renderTestList() {
+            const grid = document.getElementById('testGrid');
+            grid.innerHTML = '';
+            let levelTests = tests.filter(t => t.level === currentLevel);
+
+            if (levelTests.length === 0 && (!currentUser || currentUser.role !== 'admin')) {
+                grid.innerHTML = '<p style="text-align: center; opacity: 0.7; font-size: 1.2rem;">មិនទាន់មានវិញ្ញាសាទេ!</p>';
+            }
+
+            levelTests.forEach(test => {
+                let adminControls = '';
+                if (currentUser && currentUser.role === 'admin') {
+                    adminControls = `
+                        <div class="admin-controls">
+                            <button class="btn-icon btn-edit" title="កែប្រែ (Edit)" onclick="openEditTest(${test.id})">✏️</button>
+                            <button class="btn-icon btn-del" title="លុប (Delete)" onclick="deleteTest(${test.id})">🗑️</button>
+                        </div>
+                    `;
+                }
+                grid.innerHTML += `
+                    <div class="test-item-container">
+                        <button class="btn-test-main" onclick="doTest(${test.id})">📄 ${test.title}</button>
+                        ${adminControls}
+                    </div>
+                `;
+            });
+
+            if (currentUser && currentUser.role === 'admin') {
+                grid.innerHTML += `<button class="btn-add-test" onclick="openAddTest()">+ បន្ថែមវិញ្ញាសាថ្មី (Add New Test)</button>`;
+            }
+        }
+
+        // --- Admin Controls: Add, Edit, Delete ---
+        function deleteTest(id) {
+            if(confirm("តើអ្នកពិតជាចង់លុបវិញ្ញាសានេះមែនទេ? (Are you sure you want to delete this test?)")) {
+                tests = tests.filter(t => t.id !== id);
+                localStorage.setItem('mathskh_tests', JSON.stringify(tests));
+                renderTestList();
+            }
+        }
+
+        // --- Admin Form Control Methods ---
+        function clearAdminForm() {
+            let count = tests.filter(t => t.level === currentLevel).length + 1;
+            document.getElementById('testTitle').value = `វិញ្ញាសាទី ${count}`;
+            document.getElementById('examTimeLimit').value = '';
+            
+            const container = document.getElementById('exercisesFormWrapper');
+            container.innerHTML = '';
+            addExerciseField();
+        }
+
+        function openAddTest() {
+            editingTestId = null;
+            document.getElementById('adminFormTitle').innerHTML = `បន្ថែមវិញ្ញាសាថ្មី - <span style="color:var(--secondary)">${currentLevel}</span>`;
+            clearAdminForm();
+            showView('adminAddTestView');
+        }
+
+        function createExerciseFormHTML(uid) {
+            return `
+                <div class="exercise-form-block" id="exFormBlock-${uid}">
+                    <button type="button" class="btn btn-danger" style="position: absolute; top: 15px; right: 15px; padding: 5px 15px; font-size: 0.9rem;" onclick="removeExerciseField('${uid}')">លុបលំហាត់នេះ</button>
+                    <h3 class="exercise-form-title" style="color: var(--primary); margin-bottom: 1.5rem; padding-bottom: 5px; border-bottom: 2px solid var(--primary);">លំហាត់</h3>
+                    <div class="form-group">
+                        <label>
+                            សំណួរ (Question) 
+                            <a href="https://katex.org/#demo" target="_blank" class="katex-link" style="float: right;">🔗 បង្កើត URL / កូដ KaTeX</a>
+                        </label>
+                        <textarea id="testQuestion-${uid}" oninput="updateKaTexPreview('testQuestion-${uid}', 'qPreview-${uid}')" placeholder="វាយបញ្ចូលសំណួរ... (ប្រើ $$ សម្រាប់រូបមន្ត)"></textarea>
+                        <div class="preview-label">👁️ Preview សំណួរ</div>
+                        <div id="qPreview-${uid}" class="preview-box"></div>
+                    </div>
+                    
+                    <h4 style="color: var(--secondary); margin-top: 1.5rem; margin-bottom: 1rem;">ជម្រើសចម្លើយ (Multiple Choice)</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>A.</label>
+                            <input type="text" id="optA-${uid}" oninput="updateKaTexPreview('optA-${uid}', 'prevA-${uid}')" placeholder="ជម្រើស A">
+                            <div id="prevA-${uid}" class="preview-box-small"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>B.</label>
+                            <input type="text" id="optB-${uid}" oninput="updateKaTexPreview('optB-${uid}', 'prevB-${uid}')" placeholder="ជម្រើស B">
+                            <div id="prevB-${uid}" class="preview-box-small"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>C.</label>
+                            <input type="text" id="optC-${uid}" oninput="updateKaTexPreview('optC-${uid}', 'prevC-${uid}')" placeholder="ជម្រើស C">
+                            <div id="prevC-${uid}" class="preview-box-small"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>D.</label>
+                            <input type="text" id="optD-${uid}" oninput="updateKaTexPreview('optD-${uid}', 'prevD-${uid}')" placeholder="ជម្រើស D">
+                            <div id="prevD-${uid}" class="preview-box-small"></div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 1rem;">
+                        <div class="form-group">
+                            <label style="color: #e74c3c;">ចម្លើយត្រឹមត្រូវ (Correct)</label>
+                            <select id="correctAns-${uid}">
+                                <option value="A">A</option><option value="B">B</option>
+                                <option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>ពិន្ទុលំហាត់នេះ (Question Score)</label>
+                            <input type="number" id="testScore-${uid}" placeholder="ឧទហរណ៍៖ ១០" min="0">
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--secondary); margin-top: 1.5rem; margin-bottom: 1rem;">ការពន្យល់ និងចម្លើយ (Solution Details)</h4>
+                    
+                    <div class="form-group">
+                        <label>URL / តំណភ្ជាប់រូបភាពចម្លើយ (Answer Image/URL - Optional)</label>
+                        <input type="text" id="ansUrl-${uid}" oninput="previewUrlEx('${uid}')" placeholder="https://example.com/image.png">
+                        <img id="urlPreviewImg-${uid}" class="url-preview-img" src="" alt="URL Preview">
+                        <a id="urlPreviewLink-${uid}" href="#" target="_blank" style="display: none; margin-top: 10px;">សាកល្បងបើកតំណភ្ជាប់ (Test Link)</a>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ការពន្យល់ជាអក្សរ / KaTeX (Text/Math Explanation - Optional)</label>
+                        <textarea id="testAnswer-${uid}" oninput="updateKaTexPreview('testAnswer-${uid}', 'aPreview-${uid}')" placeholder="សរសេរការពន្យល់..."></textarea>
+                        <div class="preview-label">👁️ Preview ការពន្យល់</div>
+                        <div id="aPreview-${uid}" class="preview-box"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addExerciseField() {
+            const container = document.getElementById('exercisesFormWrapper');
+            const uid = 'uid_' + Date.now() + Math.random().toString(36).substr(2, 5);
+            
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = createExerciseFormHTML(uid);
+            container.appendChild(tempDiv.firstElementChild);
+            
+            renumberFormHeaders();
+        }
+
+        function removeExerciseField(uid) {
+            const block = document.getElementById(`exFormBlock-${uid}`);
+            if (block) {
+                if (document.querySelectorAll('.exercise-form-block').length <= 1) {
+                    alert("អ្នកត្រូវតែរក្សាយ៉ាងហោចណាស់លំហាត់មួយ! (You must keep at least one exercise)");
+                    return;
+                }
+                block.remove();
+                renumberFormHeaders();
+            }
+        }
+
+        function renumberFormHeaders() {
+            const blocks = document.querySelectorAll('.exercise-form-block');
+            blocks.forEach((block, index) => {
+                const titleEl = block.querySelector('.exercise-form-title');
+                const khmerLetter = khmerAlphabet[index % khmerAlphabet.length] || (index + 1);
+                if (titleEl) {
+                    titleEl.innerText = `លំហាត់ទី ${index + 1} (លំហាត់ ${khmerLetter})`;
+                }
+            });
+        }
+
+        function openEditTest(id) {
+            editingTestId = id;
+            const test = tests.find(t => t.id === id);
+            if(!test) return;
+
+            document.getElementById('adminFormTitle').innerHTML = `កែប្រែវិញ្ញាសា - <span style="color:var(--secondary)">${test.title}</span>`;
+            
+            document.getElementById('testTitle').value = test.title;
+            document.getElementById('examTimeLimit').value = test.examTimeLimit || '';
+            
+            const container = document.getElementById('exercisesFormWrapper');
+            container.innerHTML = '';
+
+            let exercisesList = test.exercises && test.exercises.length > 0 ? test.exercises : [{
+                question: test.question || '',
+                options: test.options || {A:'', B:'', C:'', D:''},
+                correct: test.correct || 'A',
+                score: test.score || '',
+                answer: test.answer || '',
+                ansUrl: test.ansUrl || ''
+            }];
+
+            exercisesList.forEach((ex, index) => {
+                const uid = 'uid_edit_' + index;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = createExerciseFormHTML(uid);
+                container.appendChild(tempDiv.firstElementChild);
+
+                document.getElementById(`testQuestion-${uid}`).value = ex.question;
+                document.getElementById(`optA-${uid}`).value = ex.options.A;
+                document.getElementById(`optB-${uid}`).value = ex.options.B;
+                document.getElementById(`optC-${uid}`).value = ex.options.C;
+                document.getElementById(`optD-${uid}`).value = ex.options.D;
+                document.getElementById(`correctAns-${uid}`).value = ex.correct;
+                document.getElementById(`testScore-${uid}`).value = ex.score || '';
+                document.getElementById(`testAnswer-${uid}`).value = ex.answer || '';
+                document.getElementById(`ansUrl-${uid}`).value = ex.ansUrl || '';
+
+                updateKaTexPreview(`testQuestion-${uid}`, `qPreview-${uid}`);
+                updateKaTexPreview(`testAnswer-${uid}`, `aPreview-${uid}`);
+                ['A','B','C','D'].forEach(l => updateKaTexPreview(`opt${l}-${uid}`, `prev${l}-${uid}`));
+                previewUrlEx(uid);
+            });
+
+            renumberFormHeaders();
+            showView('adminAddTestView');
+        }
+
+        function cancelEdit() {
+            editingTestId = null;
+            showView('testListView');
+        }
+
+        function updateKaTexPreview(inputId, outputId) {
+            const box = document.getElementById(outputId);
+            box.innerHTML = document.getElementById(inputId).value;
+            renderMathInElement(box, katexOptions);
+        }
+
+        function previewUrlEx(uid) {
+            const url = document.getElementById(`ansUrl-${uid}`).value.trim();
+            const imgPreview = document.getElementById(`urlPreviewImg-${uid}`);
+            const linkPreview = document.getElementById(`urlPreviewLink-${uid}`);
+            
+            imgPreview.style.display = 'none';
+            linkPreview.style.display = 'none';
+
+            if(url) {
+                if(url.match(/\.(jpeg|jpg|gif|png|webp)$/i) || url.includes('images') || url.includes('drive.google.com/uc')) {
+                    imgPreview.src = url;
+                    imgPreview.style.display = 'block';
+                } else {
+                    linkPreview.href = url;
+                    linkPreview.style.display = 'inline-block';
+                }
+            }
+        }
+
+        function saveTest(shouldGoBack = true) {
+            const title = document.getElementById('testTitle').value;
+            const examTimeLimit = document.getElementById('examTimeLimit').value || "60";
+
+            if (!title) {
+                alert('សូមបំពេញចំណងជើងវិញ្ញាសា!');
+                return false;
+            }
+
+            let outputExercises = [];
+            const blocks = document.querySelectorAll('.exercise-form-block');
+            
+            for (let index = 0; index < blocks.length; index++) {
+                const block = blocks[index];
+                const uid = block.id.replace('exFormBlock-', '');
+
+                const questionVal = document.getElementById(`testQuestion-${uid}`).value;
+                const optA = document.getElementById(`optA-${uid}`).value;
+                const optB = document.getElementById(`optB-${uid}`).value;
+                const optC = document.getElementById(`optC-${uid}`).value;
+                const optD = document.getElementById(`optD-${uid}`).value;
+                const correct = document.getElementById(`correctAns-${uid}`).value;
+                const score = document.getElementById(`testScore-${uid}`).value || "10";
+                const answer = document.getElementById(`testAnswer-${uid}`).value;
+                const ansUrl = document.getElementById(`ansUrl-${uid}`).value;
+
+                if (!questionVal || !optA || !optB || !optC || !optD) {
+                    alert(`សូមបំពេញសំណួរ និងជម្រើសចម្លើយក្នុងលំហាត់ទី ${index + 1} ឲ្យបានគ្រប់គ្រាន់!`);
+                    return false;
+                }
+
+                let processedQuestion = questionVal;
+
+                outputExercises.push({
+                    question: processedQuestion,
+                    options: { A: optA, B: optB, C: optC, D: optD },
+                    correct: correct,
+                    score: score,
+                    answer: answer,
+                    ansUrl: ansUrl
+                });
+            }
+
+            if (editingTestId) {
+                const index = tests.findIndex(t => t.id === editingTestId);
+                tests[index] = {
+                    ...tests[index],
+                    title: title,
+                    examTimeLimit: examTimeLimit,
+                    exercises: outputExercises
+                };
+                alert('កែប្រែបានជោគជ័យ! (Updated successfully)');
+            } else {
+                let testData = {
+                    id: Date.now(), 
+                    level: currentLevel, 
+                    title: title, 
+                    examTimeLimit: examTimeLimit,
+                    exercises: outputExercises
+                };
+                tests.push(testData);
+                alert('រក្សាទុកបានជោគជ័យ! (Saved successfully)');
+            }
+
+            localStorage.setItem('mathskh_tests', JSON.stringify(tests));
+            editingTestId = null;
+            renderTestList();
+            if (shouldGoBack) {
+                showView('testListView');
+            }
+            return true;
+        }
+
+        // --- Do Test Layout with Pagination Controls ---
+        function doTest(id) {
+            if (!currentUser) {
+                alert("សូមចូលគណនី ឬបង្កើតគណនីជាមុនសិន ដើម្បីចូលធ្វើវិញ្ញាសា! (Please login or register first!)");
+                showView('authView');
+                return;
+            }
+
+            const test = tests.find(t => t.id === id);
+            if (!test) return;
+
+            currentActiveExam = test;
+            selectedAnswers = {};
+            examSubmitted = false;
+            currentStudentQuestionIndex = 0; 
+            clearInterval(examCountdownInterval);
+
+            document.getElementById('examResultsContainer').innerHTML = '';
+            const timerBannerContainer = document.getElementById('examTimerContainer');
+            const content = document.getElementById('testPaperContent');
+
+            let exercisesList = test.exercises && test.exercises.length > 0 ? test.exercises : [{
+                question: test.question,
+                options: test.options,
+                correct: test.correct,
+                score: test.score || "10",
+                answer: test.answer,
+                ansUrl: test.ansUrl
+            }];
+
+            let timeRemainingSeconds = parseInt(test.examTimeLimit || 60) * 60;
+            timerBannerContainer.innerHTML = `
+                <div class="exam-timer-banner">
+                    <span>⏳ ពេលវេលានៅសល់៖ <span id="liveExamClock">--:--</span></span>
+                    <span>📝 លំហាត់សរុប៖ ${exercisesList.length}</span>
+                </div>
+            `;
+
+            function updateClockDisplay() {
+                let mins = Math.floor(timeRemainingSeconds / 60);
+                let secs = timeRemainingSeconds % 60;
+                document.getElementById('liveExamClock').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            updateClockDisplay();
+
+            examCountdownInterval = setInterval(() => {
+                timeRemainingSeconds--;
+                if (timeRemainingSeconds <= 0) {
+                    clearInterval(examCountdownInterval);
+                    updateClockDisplay();
+                    alert("អស់ម៉ោងប្រឡងហើយ! ប្រព័ន្ធនឹងផ្ញើចម្លើយរបស់អ្នកដោយស្វ័យប្រវត្តិ។ (Time is up! Submitting your exam automatically.)");
+                    submitExam();
+                } else {
+                    updateClockDisplay();
+                }
+            }, 1000);
+
+            let htmlOutput = `<h2 style="color: var(--primary); text-align: center; margin-bottom: 2rem; border-bottom: 2px dashed #ddd; padding-bottom: 1rem;">${test.title}</h2>`;
+
+            exercisesList.forEach((ex, idx) => {
+                let urlHtml = '';
+                if (ex.ansUrl) {
+                    if(ex.ansUrl.match(/\.(jpeg|jpg|gif|png|webp)$/i) || ex.ansUrl.includes('images') || ex.ansUrl.includes('drive.google.com/uc')) {
+                        urlHtml = `<div style="margin-top: 15px; text-align: center;"><img src="${ex.ansUrl}" style="max-width:100%; max-height:400px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1);"></div>`;
+                    } else {
+                        urlHtml = `<div style="margin-top: 15px;"><a href="${ex.ansUrl}" target="_blank" style="color: var(--secondary); font-weight: bold; text-decoration: none;">🔗 ចុចទីនេះដើម្បីមើលឯកសារយោង (Click for Reference)</a></div>`;
+                    }
+                }
+
+                htmlOutput += `
+                    <div class="exercise-block" id="studentExBlock-${idx}">
+                        <div class="meta-display-student">
+                            <span>💯 ពិន្ទុ៖ ${ex.score || 0}</span>
+                            <span>សំណួរទី៖ ${idx + 1} / ${exercisesList.length}</span>
+                        </div>
+                        <div style="font-size: 1.3rem; line-height: 1.8;" id="renderQ-${id}-${idx}">${ex.question}</div>
+                        
+                        <div class="options-grid">
+                            <div class="option-item" id="optA-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'A')"><strong>A.</strong> <span id="rendA-${id}-${idx}">${ex.options.A}</span></div>
+                            <div class="option-item" id="optB-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'B')"><strong>B.</strong> <span id="rendB-${id}-${idx}">${ex.options.B}</span></div>
+                            <div class="option-item" id="optC-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'C')"><strong>C.</strong> <span id="rendC-${id}-${idx}">${ex.options.C}</span></div>
+                            <div class="option-item" id="optD-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'D')"><strong>D.</strong> <span id="rendD-${id}-${idx}">${ex.options.D}</span></div>
+                        </div>
+                        
+                        <div id="ansBox-${id}-${idx}" class="answer-box">
+                            <h3 style="color: #27ae60; margin-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;">ចម្លើយត្រឹមត្រូវគឺ: ${ex.correct}</h3>
+                            <div style="font-size: 1.2rem; white-space: pre-wrap; margin-bottom: 1rem;" id="renderA-${id}-${idx}">${ex.answer || ''}</div>
+                            ${urlHtml}
+                        </div>
+                    </div>
+                `;
+            });
+
+            htmlOutput += `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #eee; gap: 15px;">
+                    <button id="btnPrevQuestion" class="btn btn-info" style="padding: 12px 30px;" onclick="navigateStudentQuestion(-1)">← ត្រឡប់ក្រោយ</button>
+                    <button id="btnNextQuestion" class="btn" style="padding: 12px 30px; background: linear-gradient(45deg, #2193b0, #6dd5ed);" onclick="navigateStudentQuestion(1)">បន្ទាប់ →</button>
+                    <button id="btnSubmitExam" class="btn" style="padding: 12px 35px; display: none;" onclick="submitExam()">ផ្ញើចម្លើយ (Submit)</button>
+                </div>
+            `;
+
+            content.innerHTML = htmlOutput;
+            showView('doTestView');
+            
+            updateStudentQuestionVisibility();
+
+            exercisesList.forEach((ex, idx) => {
+                renderMathInElement(document.getElementById(`renderQ-${id}-${idx}`), katexOptions);
+                renderMathInElement(document.getElementById(`rendA-${id}-${idx}`), katexOptions);
+                renderMathInElement(document.getElementById(`rendB-${id}-${idx}`), katexOptions);
+                renderMathInElement(document.getElementById(`rendC-${id}-${idx}`), katexOptions);
+                renderMathInElement(document.getElementById(`rendD-${id}-${idx}`), katexOptions);
+                renderMathInElement(document.getElementById(`renderA-${id}-${idx}`), katexOptions);
+            });
+        }
+
+        function navigateStudentQuestion(direction) {
+            let totalQuestions = currentActiveExam.exercises ? currentActiveExam.exercises.length : 1;
+            let nextIndex = currentStudentQuestionIndex + direction;
+
+            if (nextIndex >= 0 && nextIndex < totalQuestions) {
+                currentStudentQuestionIndex = nextIndex;
+                updateStudentQuestionVisibility();
+            }
+        }
+
+        function updateStudentQuestionVisibility() {
+            let totalQuestions = currentActiveExam.exercises ? currentActiveExam.exercises.length : 1;
+            
+            for(let i = 0; i < totalQuestions; i++) {
+                let el = document.getElementById(`studentExBlock-${i}`);
+                if(el) {
+                    if (i === currentStudentQuestionIndex) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
+                }
+            }
+
+            document.getElementById('btnPrevQuestion').style.visibility = (currentStudentQuestionIndex === 0) ? 'hidden' : 'visible';
+            
+            const nextBtn = document.getElementById('btnNextQuestion');
+            const submitBtn = document.getElementById('btnSubmitExam');
+
+            if (examSubmitted) {
+                nextBtn.style.display = (currentStudentQuestionIndex === totalQuestions - 1) ? 'none' : 'inline-block';
+                submitBtn.style.display = 'none';
+            } else {
+                if (currentStudentQuestionIndex === totalQuestions - 1) {
+                    nextBtn.style.display = 'none';
+                    submitBtn.style.display = 'inline-block';
+                } else {
+                    nextBtn.style.display = 'inline-block';
+                    submitBtn.style.display = 'none';
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectExamOption(testId, exerciseIdx, selectedLetter) {
+            if (examSubmitted) return;
+
+            selectedAnswers[exerciseIdx] = selectedLetter;
+
+            ['A','B','C','D'].forEach(letter => {
+                const el = document.getElementById(`opt${letter}-${testId}-${exerciseIdx}`);
+                if (letter === selectedLetter) {
+                    el.classList.add('selected-highlight');
+                } else {
+                    el.classList.remove('selected-highlight');
+                }
+            });
+        }
+
+        function submitExam() {
+            if (examSubmitted) return;
+            examSubmitted = true;
+            clearInterval(examCountdownInterval);
+
+            document.getElementById('examTimerContainer').innerHTML = '';
+            
+            let exercisesList = currentActiveExam.exercises && currentActiveExam.exercises.length > 0 ? currentActiveExam.exercises : [{
+                question: currentActiveExam.question,
+                options: currentActiveExam.options,
+                correct: currentActiveExam.correct,
+                score: currentActiveExam.score || "10",
+                answer: currentActiveExam.answer,
+                ansUrl: currentActiveExam.ansUrl
+            }];
+
+            let totalPossibleScore = 0;
+            let userObtainedScore = 0;
+
+            exercisesList.forEach((ex, idx) => {
+                let weight = parseFloat(ex.score || 0);
+                totalPossibleScore += weight;
+
+                let chosen = selectedAnswers[idx];
+                let correctLetter = ex.correct;
+
+                if (chosen === correctLetter) {
+                    userObtainedScore += weight;
+                    document.getElementById(`opt${correctLetter}-${currentActiveExam.id}-${idx}`).classList.add('correct-highlight');
+                } else {
+                    if (chosen) {
+                        document.getElementById(`opt${chosen}-${currentActiveExam.id}-${idx}`).classList.add('wrong-highlight');
+                    }
+                    document.getElementById(`opt${correctLetter}-${currentActiveExam.id}-${idx}`).classList.add('correct-highlight');
+                }
+
+                document.getElementById(`ansBox-${currentActiveExam.id}-${idx}`).style.display = 'block';
+            });
+
+            let percentage = totalPossibleScore > 0 ? Math.round((userObtainedScore / totalPossibleScore) * 100) : 0;
+            let grade = 'F';
+
+            if (percentage >= 90) grade = 'A';
+            else if (percentage >= 80) grade = 'B';
+            else if (percentage >= 70) grade = 'C';
+            else if (percentage >= 60) grade = 'D';
+            else if (percentage >= 50) grade = 'E';
+
+            const resultsContainer = document.getElementById('examResultsContainer');
+            resultsContainer.innerHTML = `
+                <div class="exam-results-card">
+                    <div class="exam-results-title">📊 លទ្ធផលប្រឡងរបស់អ្នក (Exam Results)</div>
+                    <p style="font-size: 1.3rem; margin-bottom: 0.5rem;">ពិន្ទុទទួលបាន៖ <strong style="color:#2ecc71;">${userObtainedScore}</strong> / ${totalPossibleScore} ពិន្ទុសរុប</p>
+                    <p style="font-size: 1.2rem; color:#7f8c8d;">ភាគរយជោគជ័យ៖ <strong>${percentage}%</strong></p>
+                    <div><span class="exam-grade-badge">និទ្ទេស៖ ${grade}</span></div>
+                </div>
+            `;
+
+            currentStudentQuestionIndex = 0;
+            updateStudentQuestionVisibility();
+
+            // Check if student successfully completed test with passing Grades A, B, or C
+            if (grade === 'A' || grade === 'B' || grade === 'C') {
+                if (!currentUser.certificates) currentUser.certificates = [];
+                
+                // Prevent duplicate certificates for the same test code block
+                if (!currentUser.certificates.some(c => c.testId === currentActiveExam.id)) {
+                    currentUser.certificates.push({
+                        testId: currentActiveExam.id,
+                        testTitle: currentActiveExam.title,
+                        grade: grade,
+                        date: new Date().toLocaleDateString('km-KH')
+                    });
+                    
+                    // Sync up user changes to local databases safely
+                    const uIdx = users.findIndex(u => u.username === currentUser.username);
+                    if(uIdx !== -1) {
+                        users[uIdx].certificates = currentUser.certificates;
+                        localStorage.setItem('mathskh_users', JSON.stringify(users));
+                    }
+                    localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
+                }
+
+                setTimeout(() => {
+                    generateStudentCertificate(grade, currentActiveExam.title);
+                }, 800);
+            }
+        }
+
+        // Logic handler to render elegant passing certificate with admin customization parameters
+        function generateStudentCertificate(gradeLetter, testTitle = "វិញ្ញាសាគណិតវិទ្យា") {
+            window.currentViewingCertTitle = testTitle;
+            const studentName = currentUser.fullName || currentUser.username;
+            const captureArea = document.getElementById('certificateCaptureArea');
+
+            captureArea.innerHTML = `
+                <div class="certificate-outer-border"></div>
+                <div class="cert-logo-badge" id="certLogoContainer">Logo</div>
+                
+                <h1 class="cert-main-title">លិខិតសរសើរ</h1>
+                <h3 class="cert-given-to">ជូនចំពោះ៖</h3>
+                <h2 class="cert-student-name" id="certStudentNameDisplay"></h2>
+                <div class="cert-divider-line"></div>
+                
+                <p class="cert-description" id="certDescriptionDisplay"></p>
+                
+                <div class="cert-footer-signature">
+                    <div class="cert-sig-img-container" id="certSigImgContainer"></div>
+                    <div class="cert-sig-line" id="certSignatureDisplay"></div>
+                </div>
+                <div style="clear: both;"></div>
+            `;
+
+            document.getElementById('certStudentNameDisplay').innerText = studentName;
+
+            if (globalCertSettings.borderData) {
+                captureArea.style.backgroundImage = `url('${globalCertSettings.borderData}')`;
+            } else {
+                captureArea.style.backgroundImage = 'none';
+            }
+
+            const logoBox = document.getElementById('certLogoContainer');
+            if (globalCertSettings.logoData) {
+                logoBox.innerHTML = `<img src="${globalCertSettings.logoData}" alt="Logo">`;
+            } else if (globalCertSettings.logoUrl) {
+                logoBox.innerHTML = `<img src="${globalCertSettings.logoUrl}" alt="Logo">`;
+            } else {
+                logoBox.innerText = "Logo";
+            }
+
+            if (globalCertSettings.descriptionTemplate) {
+                document.getElementById('certDescriptionDisplay').innerHTML = `${globalCertSettings.descriptionTemplate} លើវិញ្ញាសា <strong>«${testTitle}»</strong> ទទួលបាន <strong style="color: #ff8f00; font-size: 1.6rem;">និទ្ទេស៖ ${gradeLetter}</strong>`;
+            }
+
+            const sigContainer = document.getElementById('certSigImgContainer');
+            if (globalCertSettings.sigData) {
+                sigContainer.innerHTML = `<img src="${globalCertSettings.sigData}" alt="Signature Image">`;
+                sigContainer.style.display = 'flex';
+            } else {
+                sigContainer.innerHTML = '';
+                sigContainer.style.display = 'none';
+            }
+
+            document.getElementById('certSignatureDisplay').innerText = globalCertSettings.signature || "Maths KH";
+            
+            document.getElementById('studentCertificateModal').style.display = 'block';
+        }
+
+        // Feature wrapper for downloading/saving the HTML layout cleanly as a structural certificate asset file
+        function saveCertificateAsFile() {
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.href = globalCertSettings.borderData || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+            downloadAnchor.download = 'certificate.png';
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            document.body.removeChild(downloadAnchor);
+            
+            alert("លិខិតសរសើរត្រូវបានរក្សាទុកជាឯកសាររូបភាព (certificate.png)!");
+        }
+
+        function exitExamView() {
+            clearInterval(examCountdownInterval);
+            showView('testListView');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
