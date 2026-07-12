@@ -1,1140 +1,478 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maths KH - ឌីប្លូម & បាក់ឌុប</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ReanEnglish</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2A4A;
+    --navy-2:#24365c;
+    --paper:#FAF6EE;
+    --paper-2:#F1EADA;
+    --saffron:#E8A33D;
+    --saffron-dark:#C9822A;
+    --green:#2F6B4F;
+    --green-bg:#E4EFE7;
+    --red:#C0503A;
+    --red-bg:#F6E4DF;
+    --slate:#5B6472;
+    --border:rgba(27,42,74,0.13);
+    --radius:16px;
+    --tg-bg: var(--paper);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--navy);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    overscroll-behavior-y:none;
+  }
+  #app{max-width:520px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:24px;}
 
-    <style>
-        :root {
-            --primary: #024b80;
-            --secondary: #007bff;
-            --bg-color: #f4f7f6;
-            --text-dark: #2c3e50;
-            --card-bg: #ffffff;
-            --header-gradient: linear-gradient(135deg, #024b80, #007bff);
-        }
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 20px 10px 20px;
+  }
+  .brand{
+    display:flex;align-items:baseline;gap:8px;
+    font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;
+  }
+  .brand .dot{color:var(--saffron-dark);}
+  .iconbtn{
+    width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+    background:var(--paper-2); display:flex;align-items:center;justify-content:center;
+    font-size:16px;cursor:pointer;color:var(--navy);
+  }
+  .iconbtn:active{transform:scale(0.94);}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Battambang', sans-serif; }
+  .screen{padding:6px 20px 20px 20px; flex:1; display:flex; flex-direction:column; gap:16px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--saffron-dark); font-weight:600;
+  }
+  h1.page-title{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:2px 0 4px 0;letter-spacing:-0.01em;}
+  p.lede{color:var(--slate);font-size:14.5px;line-height:1.5;margin:0;}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-            transition: all 0.3s ease;
-        }
+  .card{
+    background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px 18px; position:relative; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .card:active{transform:scale(0.985);}
+  .card.static{cursor:default;}
+  .card-row{display:flex;align-items:center;gap:14px;}
+  .card-icon{
+    width:44px;height:44px;border-radius:12px;background:var(--paper-2);
+    display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+  }
+  .card-title{font-weight:600;font-size:15.5px;margin:0;}
+  .card-sub{color:var(--slate);font-size:12.5px;margin:3px 0 0 0;}
+  .card-arrow{margin-left:auto;color:var(--slate);font-size:18px;}
 
-        /* --- Attractive 5 Colors Configuration --- */
-        body.color-navy {
-            --primary: #0f2027;
-            --secondary: #203a43;
-            --bg-color: #f0f4f8;
-            --text-dark: #2c3e50;
-            --card-bg: #ffffff;
-            --header-gradient: linear-gradient(135deg, #0f2027, #2c5364);
-        }
-        body.color-emerald {
-            --primary: #0d5257;
-            --secondary: #11998e;
-            --bg-color: #f1f7f6;
-            --text-dark: #233331;
-            --card-bg: #ffffff;
-            --header-gradient: linear-gradient(135deg, #0d5257, #38ef7d);
-        }
-        body.color-purple {
-            --primary: #4a148c;
-            --secondary: #7b1fa2;
-            --bg-color: #f5f0f9;
-            --text-dark: #261c2c;
-            --card-bg: #ffffff;
-            --header-gradient: linear-gradient(135deg, #4a148c, #9c27b0);
-        }
-        body.color-sunset {
-            --primary: #b71c1c;
-            --secondary: #e65100;
-            --bg-color: #fffaf4;
-            --text-dark: #3e2723;
-            --card-bg: #ffffff;
-            --header-gradient: linear-gradient(135deg, #e65100, #ff8f00);
-        }
-        body.color-charcoal {
-            --primary: #1a1a24;
-            --secondary: #4f5d75;
-            --bg-color: #1a1a24;
-            --text-dark: #efefef;
-            --card-bg: #2d3142;
-            --header-gradient: linear-gradient(135deg, #0d0d11, #4f5d75);
-        }
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:12px;padding:14px 18px;font-size:15px;font-weight:600;
+    cursor:pointer;font-family:'Inter',sans-serif;width:100%;
+  }
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{background:var(--navy);color:var(--paper);}
+  .btn-accent{background:var(--saffron);color:var(--navy);}
+  .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border);}
+  .btn-danger{background:var(--red-bg);color:var(--red);}
+  .btn-sm{padding:9px 14px;font-size:13px;width:auto;border-radius:10px;}
 
-        /* Color Palettes Buttons */
-        .theme-selector-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
-        }
-        .theme-btn {
-            padding: 15px 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            text-align: center;
-            transition: all 0.2s;
-            background: #fff;
-            color: #333;
-        }
-        .theme-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .theme-btn.active { border-color: var(--secondary); background: #e3f2fd; color: #0d47a1; }
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:12.5px;font-weight:600;color:var(--slate);}
+  .field input, .field textarea, .field select{
+    border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:14.5px;
+    font-family:'Inter',sans-serif;background:#fff;color:var(--navy);width:100%;
+  }
+  .field textarea{resize:vertical;min-height:60px;}
+  .field input:focus, .field textarea:focus, .field select:focus{outline:2px solid var(--saffron);outline-offset:1px;}
 
-        header {
-            background: var(--header-gradient);
-            color: white; padding: 1rem 2rem; display: flex; justify-content: space-between;
-            align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;
-            transition: background 0.3s ease;
-        }
+  .error-msg{background:var(--red-bg);color:var(--red);padding:10px 12px;border-radius:10px;font-size:13px;font-weight:500;}
+  .ok-msg{background:var(--green-bg);color:var(--green);padding:10px 12px;border-radius:10px;font-size:13px;font-weight:500;}
 
-        .logo { font-size: 1.5rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .logo img { max-height: 40px; border-radius: 50%; object-fit: cover; }
+  .progress-wrap{display:flex;align-items:center;gap:10px;}
+  .progress-track{flex:1;height:6px;border-radius:4px;background:var(--paper-2);overflow:hidden;}
+  .progress-fill{height:100%;background:var(--saffron);border-radius:4px;transition:width .25s ease;}
+  .progress-label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);white-space:nowrap;}
 
-        /* LED Text Banner Styles */
-        .led-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.1);
-            padding: 10px 0;
-            font-size: 1.1rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
+  .option{
+    border:1.5px solid var(--border);border-radius:12px;padding:13px 14px;font-size:14.5px;
+    display:flex;align-items:center;gap:12px;cursor:pointer;background:#fff;font-weight:500;
+  }
+  .option .letter{
+    width:26px;height:26px;border-radius:50%;background:var(--paper-2);color:var(--navy);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .option.selected{border-color:var(--saffron);background:#FFF7EA;}
+  .option.selected .letter{background:var(--saffron);color:var(--navy);}
+  .option.correct{border-color:var(--green);background:var(--green-bg);}
+  .option.correct .letter{background:var(--green);color:#fff;}
+  .option.wrong{border-color:var(--red);background:var(--red-bg);}
+  .option.wrong .letter{background:var(--red);color:#fff;}
 
-        .led-marquee {
-            display: inline-block;
-            padding-left: 100%;
-            animation: led-scroll 25s linear infinite;
-        }
+  .score-ring{
+    width:140px;height:140px;border-radius:50%;margin:8px auto 4px auto;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    background:conic-gradient(var(--saffron) calc(var(--pct) * 1%), var(--paper-2) 0);
+  }
+  .score-ring::before{content:'';position:absolute;inset:10px;border-radius:50%;background:#fff;}
+  .score-ring .val{position:relative;font-family:'Fraunces',serif;font-size:28px;font-weight:700;}
 
-        .led-marquee:hover {
-            animation-play-state: paused;
-        }
+  .footer-nav{
+    position:sticky;bottom:0;background:linear-gradient(180deg, rgba(250,246,238,0) 0%, var(--paper) 30%);
+    padding:14px 20px 4px 20px;
+  }
 
-        @keyframes led-scroll {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--border);margin-bottom:2px;}
+  .tab{
+    padding:9px 12px;font-size:13px;font-weight:600;color:var(--slate);cursor:pointer;
+    border-bottom:2px solid transparent;
+  }
+  .tab.active{color:var(--navy);border-bottom-color:var(--saffron);}
 
-        .btn {
-            background: linear-gradient(45deg, #11998e, #38ef7d); color: white; border: none;
-            padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-        .btn-danger { background: linear-gradient(45deg, #ff416c, #ff4b2b); }
-        .btn-info { background: linear-gradient(45deg, #2193b0, #6dd5ed); }
-        .btn-outline { background: transparent; border: 2px solid white; box-shadow: none; }
-        .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .list-item{
+    display:flex;align-items:center;justify-content:between;gap:10px;
+    border:1px solid var(--border);border-radius:12px;padding:11px 13px;background:#fff;
+  }
+  .list-item .txt{flex:1;font-size:13.5px;}
+  .list-item .txt b{display:block;font-size:14px;margin-bottom:2px;}
+  .list-item .actions{display:flex;gap:6px;}
+  .mini-btn{
+    width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--paper-2);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;
+  }
 
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+  .divider{height:1px;background:var(--border);margin:4px 0;}
+  .empty-state{
+    text-align:center;padding:30px 12px;color:var(--slate);font-size:13.5px;
+  }
+  .badge{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    padding:3px 8px;border-radius:20px;background:var(--paper-2);color:var(--navy);
+  }
+  .kicker-row{display:flex;align-items:center;justify-content:space-between;}
 
-        .view-section { display: none; animation: fadeIn 0.4s ease; }
-        .view-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- Animated Level Cards --- */
-        .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 700px; margin: 3rem auto; }
-        
-        .level-card {
-            background: var(--card-bg); border-radius: 20px; padding: 2.5rem 1rem; text-align: center;
-            cursor: pointer; position: relative; overflow: hidden; z-index: 1;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .level-card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; transition: opacity 0.4s ease; opacity: 0;
-        }
-        .level-card:hover { transform: translateY(-12px) scale(1.03); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-        .level-card:hover::before { opacity: 1; }
-        
-        .level-diploma { border: 2px solid #f6d365; color: #f39c12; }
-        .level-diploma::before { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
-        .level-diploma:hover { color: white; border-color: transparent; }
-        
-        .level-bac2 { border: 2px solid #a18cd1; color: #8e44ad; }
-        .level-bac2::before { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
-        .level-bac2:hover { color: white; border-color: transparent; }
-
-        .level-icon { font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-        .level-title { font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem; }
-        .level-subtitle { font-size: 1.1rem; opacity: 0.9; }
-
-        /* --- Test List Items --- */
-        .test-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; max-width: 800px; margin-inline: auto; }
-        .test-item-container {
-            display: flex; align-items: stretch; background: var(--card-bg); border: 2px solid #e1e8ed;
-            border-radius: 12px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-        }
-        .test-item-container:hover { border-color: var(--secondary); box-shadow: 0 8px 20px rgba(0,123,255,0.1); transform: translateY(-3px); }
-        
-        .btn-test-main {
-            flex: 1; padding: 1.2rem; background: transparent; border: none; font-size: 1.2rem;
-            color: var(--primary); text-align: left; cursor: pointer; font-weight: bold;
-        }
-        .btn-test-main:hover { background: rgba(2, 75, 128, 0.03); }
-        
-        .admin-controls { display: flex; }
-        .btn-icon { background: #f8f9fa; border: none; border-left: 1px solid #e1e8ed; padding: 0 20px; cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
-        .btn-edit { color: #f39c12; } .btn-edit:hover { background: #fef5e7; }
-        .btn-del { color: #e74c3c; } .btn-del:hover { background: #fdedec; }
-        
-        .btn-add-test { width: 100%; padding: 1.2rem; background: #e8f5e9; color: #2e7d32; border: 2px dashed #4caf50; border-radius: 12px; font-size: 1.2rem; cursor: pointer; font-weight: bold; transition: 0.2s; margin-top: 1rem; }
-        .btn-add-test:hover { background: #c8e6c9; }
-
-        /* --- Forms & Modals --- */
-        .form-container { background: var(--card-bg); padding: 2.5rem; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); margin: 0 auto; }
-        .form-container.large { max-width: 900px; }
-        .form-container.small { max-width: 500px; }
-        .form-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--primary); }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccd1d9; border-radius: 8px; font-size: 1rem; font-family: inherit; transition: border 0.3s; background: #fff; color: #333; }
-        body.color-charcoal input, body.color-charcoal select, body.color-charcoal textarea { background: #1a1a24; color: #fff; border-color: #4f5d75; }
-        input:focus, textarea:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
-        textarea { resize: vertical; min-height: 100px; }
-
-        /* Password Input Wrapper for Eye Icon */
-        .password-wrapper { position: relative; display: flex; align-items: center; }
-        .password-wrapper input { padding-right: 40px; }
-        .toggle-password { position: absolute; right: 10px; cursor: pointer; user-select: none; font-size: 1.2rem; color: #666; }
-
-        /* Preview Box */
-        .preview-box { margin-top: 10px; padding: 15px; background: rgba(0,0,0,0.02); border: 2px dashed #aab2bd; border-radius: 8px; min-height: 60px; white-space: pre-wrap; font-size: 1.1rem; color: inherit; }
-        .preview-box-small { margin-top: 5px; padding: 8px; background: rgba(0,0,0,0.02); border: 1px dashed #aab2bd; border-radius: 6px; min-height: 40px; font-size: 1rem; color: inherit; }
-        .preview-label { font-size: 0.9rem; color: var(--secondary); font-weight: bold; margin-bottom: 5px; margin-top: 10px; display: flex; justify-content: space-between; }
-        
-        .katex-link { font-size: 0.9rem; color: #ff6b6b; text-decoration: none; font-weight: normal; }
-        .katex-link:hover { text-decoration: underline; }
-
-        /* Image Preview Box */
-        .url-preview-img { max-width: 100%; max-height: 300px; border-radius: 8px; margin-top: 10px; display: none; object-fit: contain; }
-
-        /* --- Test Paper Display --- */
-        .test-paper { background: var(--card-bg); padding: 3rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; }
-        .exercise-block { display: none; border-bottom: 2px dashed #e1e8ed; padding-bottom: 2rem; margin-bottom: 2rem; position: relative; }
-        .exercise-block.active { display: block; border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-        .option-item { background: rgba(0,0,0,0.02); border: 2px solid #e1e8ed; border-radius: 10px; padding: 1.2rem; cursor: pointer; transition: 0.2s; font-size: 1.1rem; color: inherit; }
-        .option-item:hover { border-color: var(--secondary); background: rgba(255,255,255,0.05); }
-        .option-item.correct-highlight { border-color: #4caf50; background: #e8f5e9; color: #333; }
-        .option-item.selected-highlight { border-color: var(--secondary); background: #e3f2fd; font-weight: bold; color: #0d47a1; }
-        .option-item.wrong-highlight { border-color: #e74c3c; background: #fdedec; color: #333; }
-
-        .answer-box { display: none; margin-top: 2rem; padding: 2rem; background: rgba(76, 175, 80, 0.1); border-left: 6px solid #8bc34a; border-radius: 8px; color: inherit; }
-        .error-msg { color: #e74c3c; text-align: center; margin-top: 15px; display: none; font-weight: bold; }
-
-        /* --- Settings Category Styling --- */
-        .settings-category { background: rgba(0,0,0,0.02); border: 1px solid #e1e8ed; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; color: inherit; }
-        .settings-category-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0,0,0,0.1); margin-bottom: 1rem; padding-bottom: 10px; }
-        .settings-category-header h3 { color: var(--secondary); margin: 0; }
-        .settings-category p { font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .btn-edit-small { color: var(--secondary); border: 1px solid var(--secondary); background: transparent; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-edit-small:hover { background: var(--secondary); color: white; }
-
-        /* Certificate buttons style in settings */
-        .cert-badge-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #fff7e6, #fff);
-            border: 2px solid #d4af37;
-            padding: 10px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #b8972f;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .cert-badge-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(212, 175, 55, 0.2);
-            background: linear-gradient(135deg, #d4af37, #b8972f);
-            color: #fff;
-        }
-        .cert-badge-btn .badge-icon {
-            background: #d4af37;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .cert-badge-btn:hover .badge-icon {
-            background: white;
-            color: #b8972f;
-        }
-
-        /* --- Exercise Wrapper Box Inside Form --- */
-        .exercise-form-block { background: rgba(0,0,0,0.02); border: 2px solid #e1e8ed; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; position: relative; color: inherit; }
-
-        .meta-display-student { display: flex; justify-content: space-between; font-weight: bold; font-size: 0.95rem; margin-bottom: 10px; color: #7f8c8d; }
-
-        /* --- Exam Timer & Result Banner --- */
-        .exam-timer-banner { background: #e3f2fd; border-left: 6px solid #1e88e5; padding: 1rem; border-radius: 8px; font-size: 1.2rem; font-weight: bold; color: #0d47a1; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 70px; z-index: 99; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .exam-results-card { background: #fffde7; border: 2px solid #fff59d; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #333; }
-        .exam-results-title { font-size: 1.8rem; font-weight: bold; color: #f57f17; margin-bottom: 1rem; }
-        .exam-grade-badge { display: inline-block; font-size: 3rem; font-weight: bold; background: #fbc02d; color: white; padding: 0.5rem 2rem; border-radius: 50px; margin-top: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-
-        /* --- Elegant White and Gold Student Certificate Overlay --- */
-        .certificate-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            overflow-y: auto;
-            padding: 20px;
-        }
-        .certificate-modal-wrapper {
-            max-width: 900px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        .certificate-container-box {
-            position: relative;
-            background: #ffffff;
-            border: 4px double #d4af37;
-            padding: 45px;
-            color: #2c3e50;
-            box-sizing: border-box;
-            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.2);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-        }
-        .certificate-outer-border {
-            position: absolute;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
-            border: 2px solid #d4af37;
-            pointer-events: none;
-        }
-        .cert-logo-badge {
-            position: absolute;
-            top: 35px; left: 45px;
-            width: 80px; height: 80px;
-            border: 2px solid #2c3e50;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #024b80;
-            overflow: hidden;
-            background: #fff;
-        }
-        .cert-logo-badge img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .cert-main-title {
-            font-size: 3.5rem;
-            color: #ff0000;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-            text-decoration: underline;
-            text-underline-offset: 8px;
-        }
-        .cert-given-to {
-            font-size: 1.8rem;
-            color: #333;
-            margin: 20px 0 10px 0;
-            font-weight: bold;
-        }
-        .cert-student-name {
-            font-size: 2.8rem;
-            color: #d4af37;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        .cert-divider-line {
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #d4af37, transparent);
-            margin: 15px auto;
-        }
-        .cert-description {
-            font-size: 1.35rem;
-            color: #024b80;
-            line-height: 2;
-            max-width: 80%;
-            margin: 20px auto;
-        }
-        .cert-footer-signature {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 15px;
-            padding-right: 40px;
-            float: right;
-        }
-        .cert-sig-img-container {
-            width: 150px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
-        }
-        .cert-sig-img-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        .cert-sig-line {
-            width: 200px;
-            border-top: 1px solid #7f8c8d;
-            padding-top: 5px;
-            font-size: 1.1rem;
-            color: #024b80;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        @media print {
-            body * { visibility: hidden; }
-            .certificate-overlay, .certificate-overlay * { visibility: visible; }
-            .certificate-overlay { position: absolute; left: 0; top: 0; width: 100%; background: none; padding: 0; }
-            .certificate-modal-wrapper { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
-            .cert-action-btns { display: none !important; }
-        }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 1rem; }
-            .level-grid { grid-template-columns: 1fr; }
-            .options-grid { grid-template-columns: 1fr; }
-            .test-paper { padding: 1.5rem; }
-            .exam-timer-banner { top: 120px; font-size: 1rem; }
-            .cert-main-title { font-size: 2.2rem; }
-            .cert-student-name { font-size: 1.8rem; }
-            .cert-logo-badge { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; }
-        }
-    </style>
+  ::-webkit-scrollbar{width:0px;}
+</style>
 </head>
 <body>
+<div id="app"></div>
 
-    <header>
-        <div class="logo" id="mainWebsiteLogo" onclick="showView('homeView')"><span>📐</span> Maths KH</div>
-        <div id="navButtons"></div>
-    </header>
+<script>
+/* ============================================================
+   ReanEnglish — Telegram Mini App (frontend-only, no backend)
+   All content lives in localStorage on the device running it.
+   ============================================================ */
 
-    <div class="led-container" id="ledBannerContainer">
-        <span class="led-marquee" id="ledMarqueeText"></span>
+const STORAGE_KEY = 'reanenglish_data_v1';
+const HISTORY_KEY = 'reanenglish_history_v1';
+const SESSION_ADMIN_KEY = 'reanenglish_admin_session';
+
+const tg = window.Telegram ? window.Telegram.WebApp : null;
+if (tg) { try { tg.ready(); tg.expand(); tg.setHeaderColor && tg.setHeaderColor('#1B2A4A'); } catch(e){} }
+
+function currentUserId(){
+  try {
+    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) return String(tg.initDataUnsafe.user.id);
+  } catch(e){}
+  return 'guest';
+}
+function currentUserName(){
+  try {
+    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      const u = tg.initDataUnsafe.user;
+      return u.first_name ? (u.first_name + (u.last_name ? ' '+u.last_name : '')) : 'Student';
+    }
+  } catch(e){}
+  return 'Guest';
+}
+
+/* ---------------- default seed data ---------------- */
+function defaultData(){
+  return {
+    settings: { adminUser: 'admin', adminPass: 'Rean#2026' },
+    categories: [
+      {
+        id:'cat_grammar', name:'Grammar', icon:'📘',
+        tests:[
+          { id:'t_tenses', title:'Tenses Basics', desc:'Present, past & future simple', questions:[
+            {id:'q1', text:'She ___ to school every day.', options:['go','goes','going','gone'], correct:1},
+            {id:'q2', text:'They ___ football yesterday.', options:['play','plays','played','playing'], correct:2},
+            {id:'q3', text:'I ___ finish my homework by tomorrow.', options:['will','am','was','did'], correct:0},
+            {id:'q4', text:'He ___ watching TV right now.', options:['is','are','was','be'], correct:0},
+            {id:'q5', text:'We ___ never been to Japan.', options:['has','have','had','having'], correct:1}
+          ]},
+          { id:'t_prepositions', title:'Prepositions', desc:'In, on, at and more', questions:[
+            {id:'q1', text:'The book is ___ the table.', options:['on','in','at','by'], correct:0},
+            {id:'q2', text:'She was born ___ 2005.', options:['on','at','in','for'], correct:2},
+            {id:'q3', text:'We will meet ___ Monday.', options:['in','on','at','since'], correct:1},
+            {id:'q4', text:'He is afraid ___ spiders.', options:['of','with','for','about'], correct:0}
+          ]}
+        ]
+      },
+      {
+        id:'cat_vocab', name:'Vocabulary', icon:'📗',
+        tests:[
+          { id:'t_daily', title:'Daily Life Words', desc:'Common everyday vocabulary', questions:[
+            {id:'q1', text:'Something you use to write is a ___.', options:['pen','plate','shoe','cloud'], correct:0},
+            {id:'q2', text:'The opposite of "cheap" is ___.', options:['fast','expensive','small','quiet'], correct:1},
+            {id:'q3', text:'A place where you buy food is a ___.', options:['library','market','hospital','airport'], correct:1},
+            {id:'q4', text:'"Enormous" means ___.', options:['tiny','very big','very fast','beautiful'], correct:1},
+            {id:'q5', text:'The opposite of "begin" is ___.', options:['start','finish','open','continue'], correct:1}
+          ]}
+        ]
+      },
+      {
+        id:'cat_reading', name:'Reading', icon:'📙',
+        tests:[
+          { id:'t_short', title:'Short Passage Quiz', desc:'Read and answer', questions:[
+            {id:'q1', text:'"Tom woke up late and missed the bus." Why was Tom late?', options:['He missed the bus','He woke up late','He was sick','He lost his bag'], correct:1},
+            {id:'q2', text:'"Maria loves reading books about the ocean." What does Maria love?', options:['Cooking','Swimming','Reading about the ocean','Playing music'], correct:2},
+            {id:'q3', text:'"It rained all day, so the children stayed inside." What did the children do?', options:['Played outside','Stayed inside','Went to school','Went swimming'], correct:1}
+          ]}
+        ]
+      }
+    ]
+  };
+}
+
+function loadData(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) { const d = defaultData(); localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); return d; }
+    return JSON.parse(raw);
+  } catch(e){ const d = defaultData(); localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); return d; }
+}
+function saveData(d){ localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+function loadHistory(){
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}'); } catch(e){ return {}; }
+}
+function saveHistory(h){ localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
+function addHistoryEntry(entry){
+  const h = loadHistory();
+  const uid = currentUserId();
+  if (!h[uid]) h[uid] = [];
+  h[uid].unshift(entry);
+  h[uid] = h[uid].slice(0, 30);
+  saveHistory(h);
+}
+
+let DATA = loadData();
+
+/* ---------------- tiny router / state ---------------- */
+let state = {
+  screen: 'home',
+  categoryId: null,
+  testId: null,
+  quiz: null,      // { qIndex, answers: [], test, category }
+  adminTab: 'categories',
+  adminEditing: null // {type:'category'|'test'|'question', catId, testId, qId}
+};
+
+function nav(screen, extra){
+  state.screen = screen;
+  Object.assign(state, extra || {});
+  render();
+  window.scrollTo(0,0);
+}
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ==================== RENDER ROOT ==================== */
+function render(){
+  const app = document.getElementById('app');
+  let html = '';
+  if (state.screen === 'home') html = screenHome();
+  else if (state.screen === 'categories') html = screenCategories();
+  else if (state.screen === 'tests') html = screenTests();
+  else if (state.screen === 'testIntro') html = screenTestIntro();
+  else if (state.screen === 'quiz') html = screenQuiz();
+  else if (state.screen === 'results') html = screenResults();
+  else if (state.screen === 'history') html = screenHistory();
+  else if (state.screen === 'adminLogin') html = screenAdminLogin();
+  else if (state.screen === 'adminDashboard') html = screenAdminDashboard();
+  else html = screenHome();
+
+  app.innerHTML = html;
+  bindHandlers();
+  updateTelegramBackButton();
+}
+
+function updateTelegramBackButton(){
+  if (!tg || !tg.BackButton) return;
+  if (state.screen === 'home') { tg.BackButton.hide(); }
+  else {
+    tg.BackButton.show();
+    tg.BackButton.offClick && tg.BackButton.offClick(handleBack);
+    tg.BackButton.onClick(handleBack);
+  }
+}
+function handleBack(){
+  const s = state.screen;
+  if (s === 'categories' || s === 'history') nav('home');
+  else if (s === 'tests') nav('categories');
+  else if (s === 'testIntro') nav('tests', {categoryId: state.categoryId});
+  else if (s === 'quiz') { if (confirm('Leave the test? Your progress will be lost.')) nav('testIntro'); }
+  else if (s === 'results') nav('home');
+  else if (s === 'adminLogin') nav('home');
+  else if (s === 'adminDashboard') nav('home');
+  else nav('home');
+}
+
+/* ==================== SCREENS ==================== */
+
+function screenHome(){
+  const totalTests = DATA.categories.reduce((a,c)=>a+c.tests.length,0);
+  return `
+    <div class="topbar">
+      <div class="brand">Rean<span class="dot">English</span></div>
+      <div class="iconbtn" data-action="go-admin" title="Admin">⚙️</div>
     </div>
+    <div class="screen">
+      <div class="eyebrow">Welcome, ${esc(currentUserName())}</div>
+      <h1 class="page-title">Practice English,<br/>one quiz at a time.</h1>
+      <p class="lede">${DATA.categories.length} categories · ${totalTests} tests ready for you. Pick a topic and test what you know.</p>
 
-    <div class="container">
-        
-        <div id="homeView" class="view-section active">
-            <h2 style="text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2rem;">ជ្រើសរើសកម្រិតសិក្សា</h2>
-            <div class="level-grid">
-                <div class="level-card level-diploma" onclick="openLevel('Diploma')">
-                    <div class="level-icon">🎓</div>
-                    <div class="level-title">ឌីប្លូម</div>
-                    <div class="level-subtitle">ថ្នាក់ទី ៩ (Diploma)</div>
-                </div>
-                <div class="level-card level-bac2" onclick="openLevel('Bac II')">
-                    <div class="level-icon">🏛️</div>
-                    <div class="level-title">បាក់ឌុប</div>
-                    <div class="level-subtitle">ថ្នាក់ទី ១២ (Bac II)</div>
-                </div>
-            </div>
+      <div class="card" data-action="go-categories">
+        <div class="card-row">
+          <div class="card-icon">📝</div>
+          <div>
+            <p class="card-title">Start a test</p>
+            <p class="card-sub">Choose a category and begin</p>
+          </div>
+          <div class="card-arrow">›</div>
         </div>
+      </div>
 
-        <div id="testListView" class="view-section">
-            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="showView('homeView')">← ត្រឡប់ក្រោយ</button>
-            <h2 id="levelTitle" style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 2rem;"></h2>
-            <div id="testGrid" class="test-grid"></div>
+      <div class="card" data-action="go-history">
+        <div class="card-row">
+          <div class="card-icon">📊</div>
+          <div>
+            <p class="card-title">My results</p>
+            <p class="card-sub">See your past scores</p>
+          </div>
+          <div class="card-arrow">›</div>
         </div>
-
-        <div id="doTestView" class="view-section">
-            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="exitExamView()">← ត្រឡប់ទៅបញ្ជីវិញ្ញាសា</button>
-            <div id="examTimerContainer"></div>
-            <div id="examResultsContainer"></div>
-            <div class="test-paper" id="testPaperContent"></div>
-        </div>
-
-        <div id="authView" class="view-section">
-            <div class="form-container small">
-                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary);">ចូលគណនី</h2>
-                <div class="form-group">
-                    <label>ឈ្មោះអ្នកប្រើប្រាស់ (Username)</label>
-                    <input type="text" id="loginUser">
-                </div>
-                <div class="form-group">
-                    <label>លេខសម្ងាត់ (Password)</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="loginPass">
-                        <span class="toggle-password" onclick="togglePassword('loginPass', this)">👁️</span>
-                    </div>
-                </div>
-                <button class="btn" style="width: 100%; margin-bottom: 10px;" onclick="login()">ចូល (Login)</button>
-                <button class="btn btn-info" style="width: 100%;" onclick="showView('registerView')">បង្កើតគណនីថ្មី (Register)</button>
-                <p id="authError" class="error-msg">ព័ត៌មានមិនត្រឹមត្រូវ!</p>
-            </div>
-        </div>
-
-        <div id="registerView" class="view-section">
-            <div class="form-container small">
-                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">បង្កើតគណនីថ្មី</h2>
-                <div class="form-group">
-                    <label>ឈ្មោះពេញ (Full Name)</label>
-                    <input type="text" id="regFullName" placeholder="ឧទហរណ៍៖ សុខ សាន្ត">
-                </div>
-                <div class="form-group">
-                    <label>ឈ្មោះអ្នកប្រើប្រាស់ (Username)</label>
-                    <input type="text" id="regUser" placeholder="ឧទហរណ៍៖ sok123">
-                </div>
-                <div class="form-group">
-                    <label>លេខសម្ងាត់ (Password)</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="regPass" placeholder="បញ្ចូលលេខសម្ងាត់">
-                        <span class="toggle-password" onclick="togglePassword('regPass', this)">👁️</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>បញ្ជាក់លេខសម្ងាត់ (Verify Password)</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="regVerifyPass" placeholder="បញ្ចូលលេខសម្ងាត់ម្តងទៀត">
-                        <span class="toggle-password" onclick="togglePassword('regVerifyPass', this)">👁️</span>
-                    </div>
-                </div>
-                <button class="btn btn-info" style="width: 100%; margin-bottom: 10px;" onclick="register()">បង្កើតគណនី</button>
-                <button class="btn btn-outline" style="width: 100%; color: var(--primary); border-color: #ddd;" onclick="showView('authView')">ត្រឡប់ទៅចូលគណនី (Back to Login)</button>
-                <p id="regError" class="error-msg"></p>
-            </div>
-        </div>
-
-        <div id="adminAddTestView" class="view-section">
-            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="cancelEdit()">← បោះបង់ (Cancel)</button>
-            <div class="form-container large">
-                <h2 id="adminFormTitle" style="text-align: center; margin-bottom: 1.5rem; color: var(--primary);">បន្ថែមវិញ្ញាសាថ្មី - <span id="addTestLevelLabel"></span></h2>
-                
-                <div class="form-group">
-                    <label>ចំណងជើងវិញ្ញាសា (Test Title)</label>
-                    <input type="text" id="testTitle" placeholder="ឧទហរណ៍៖ វិញ្ញាសាទី១">
-                </div>
-
-                <div class="form-group">
-                    <label>រយៈពេលប្រឡងសរុប (នាទី) - Total Exam Time (Mins)</label>
-                    <input type="number" id="examTimeLimit" placeholder="ឧទហរណ៍៖ ៦០" min="1">
-                </div>
-
-                <div id="exercisesFormWrapper"></div>
-
-                <div style="display: flex; gap: 15px; margin-top: 2rem;">
-                    <button class="btn" style="flex: 1; padding: 15px; font-size: 1.2rem;" onclick="saveTest(true)">រក្សាទុក (Save Test)</button>
-                    <button class="btn btn-info" style="flex: 1; padding: 15px; font-size: 1.2rem; background: linear-gradient(45deg, #f39c12, #f1c40f);" onclick="addExerciseField()">បន្ថែមលំហាត់</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="settingsView" class="view-section">
-            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="showView('homeView')">← ត្រឡប់ក្រោយ (Back)</button>
-            <div class="form-container large">
-                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">⚙️ ការកំណត់ (Settings)</h2>
-                
-                <div style="display: flex; flex-direction: column;">
-
-                    <div class="settings-category" id="adminLedSettingsPanel" style="display: none; border: 2px dashed #007bff; background: rgba(0, 123, 255, 0.02);">
-                        <div class="settings-category-header">
-                            <h3 style="color: #007bff;">📢 ការកំណត់អត្ថបទ LED (Admin LED Banner Controls)</h3>
-                        </div>
-                        <div class="form-group">
-                            <label>អត្ថបទជូនដំណឹង LED (LED Custom Text)</label>
-                            <textarea id="inputLedText" oninput="updateLedBannerLive()" placeholder="សរសេរអត្ថបទទីនេះ..."></textarea>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group">
-                                <label>ពណ៌អក្សរ (Text Color)</label>
-                                <input type="color" id="inputLedTextColor" oninput="updateLedBannerLive()">
-                            </div>
-                            <div class="form-group">
-                                <label>ពណ៌ផ្ទៃក្រោយ (Background Color)</label>
-                                <input type="color" id="inputLedBgColor" oninput="updateLedBannerLive()">
-                            </div>
-                        </div>
-                        <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveLedSettings()">រក្សាទុកការកំណត់ LED (Save LED Settings)</button>
-                    </div>
-
-                    <div class="settings-category" id="adminCertificateSettingsPanel" style="display: none; border: 2px dashed #d4af37; background: rgba(212, 175, 55, 0.02);">
-                        <div class="settings-category-header">
-                            <h3 style="color: #b8972f;">📜 ការកំណត់លិខិតសរសើរ (Admin Certificate Settings)</h3>
-                        </div>
-                        <div class="form-group">
-                            <label>បញ្ចូលរូបភាពផ្ទៃខាងក្រោយលិខិតសរសើរ (Upload border.png certificate)</label>
-                            <input type="file" id="inputCertBorderFile" accept="image/*" style="margin-bottom: 10px;">
-                            <label>តំណភ្ជាប់ឡូហ្គោលិខិតសរសើរ (Certificate Logo Image URL / Upload Logo.png)</label>
-                            <input type="text" id="inputCertLogoUrl" placeholder="https://example.com/logo.png" style="margin-bottom: 10px;">
-                            <input type="file" id="inputCertLogoFile" accept="image/*" style="margin-bottom: 10px;">
-                        </div>
-                        <div class="form-group">
-                            <label>អត្ថបទបរិយាយរួម (Certificate Text Template)</label>
-                            <textarea id="inputCertDescription" placeholder="សូមអរគុណចំពោះខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅ..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>បញ្ចូលរូបភាពហត្ថលេខា (Upload Signature.png)</label>
-                            <input type="file" id="inputCertSigFile" accept="image/*" style="margin-bottom: 10px;">
-                            <label>ហត្ថលេខា / ឈ្មោះស្ថាប័ន (Signature Text)</label>
-                            <input type="text" id="inputCertSignature" placeholder="Maths KH">
-                        </div>
-                        <button class="btn" style="width: 100%; margin-top: 10px; background: linear-gradient(45deg, #d4af37, #b8972f);" onclick="saveCertificateSettings()">រក្សាទុកការកំណត់លិខិតសរសើរ (Save Certificate Config)</button>
-                    </div>
-
-                    <div class="settings-category" id="studentCertificatesPanel" style="display: none;">
-                        <div class="settings-category-header">
-                            <h3>📜 លិខិតសរសើររបស់អ្នក (Your Certificates)</h3>
-                        </div>
-                        <div id="studentCertificatesContainer" style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;"></div>
-                    </div>
-                    
-                    <div class="settings-category">
-                        <div class="settings-category-header">
-                            <h3>🎨 ពណ៌ផ្ទៃកម្មវិធី (App Color Themes)</h3>
-                        </div>
-                        <div class="theme-selector-grid">
-                            <div class="theme-btn" id="theme-navy" onclick="changeColor('navy')">🔵 Navy Blue</div>
-                            <div class="theme-btn" id="theme-emerald" onclick="changeColor('emerald')">🟢 Emerald Green</div>
-                            <div class="theme-btn" id="theme-purple" onclick="changeColor('purple')">🟣 Royal Purple</div>
-                            <div class="theme-btn" id="theme-sunset" onclick="changeColor('sunset')">🟠 Terracotta</div>
-                            <div class="theme-btn" id="theme-charcoal" onclick="changeColor('charcoal')">⚫ Deep Charcoal</div>
-                        </div>
-                    </div>
-
-                    <div class="settings-category">
-                        <div class="settings-category-header">
-                            <h3>👤 គណនី (Account)</h3>
-                            <button class="btn-edit-small" onclick="showEditProfile()">កែប្រែ (Edit)</button>
-                        </div>
-                        <p><strong>ឈ្មោះពេញ (Full Name):</strong> <span id="setFullName"></span></p>
-                        <p><strong>ឈ្មោះអ្នកប្រើប្រាស់ (Username):</strong> <span id="setUserName"></span></p>
-                        <p><strong>តួនាទី (Role):</strong> <span id="setRole"></span></p>
-                    </div>
-
-                    <div class="settings-category">
-                        <div class="settings-category-header">
-                            <h3>ℹ️ ព័ត៌មានលម្អិត (Detail)</h3>
-                            <button id="btnEditAppDetails" class="btn-edit-small" style="display: none;" onclick="showEditAppDetails()">កែប្រែ (Edit)</button>
-                        </div>
-                        <p><strong>កម្មវិធី (App):</strong> <span id="detApp"></span></p>
-                        <p><strong>មុខងារ (Features):</strong> <span id="detFeatures"></span></p>
-                        <p><strong>កម្រិតសិក្សា (Levels):</strong> <span id="detLevels"></span></p>
-                        <p><strong>កំណែ (Version):</strong> <span id="detVersion"></span></p>
-                    </div>
-
-                    <div class="settings-category" style="text-align: center; border-color: #f5b7b1;">
-                        <h3 style="color: #e74c3c; border-bottom: 2px solid #fadbd8; margin-bottom: 1rem; padding-bottom: 10px;">🚪 ចាកចេញពីគណនី (Log out)</h3>
-                        <button class="btn btn-danger" style="margin-top: 10px; padding: 12px 30px;" onclick="logout()">ចាកចេញឥឡូវនេះ (Logout Now)</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="editProfileView" class="view-section">
-            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="openSettings()">← បោះបង់ (Cancel)</button>
-            <div class="form-container small">
-                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">កែប្រែគណនី (Edit Profile)</h2>
-                
-                <div class="form-group">
-                    <label>ឈ្មោះពេញ (Full Name)</label>
-                    <input type="text" id="editFullName">
-                </div>
-                
-                <div class="form-group">
-                    <label>លេខសម្ងាត់ថ្មី (New Password) <br><small style="color:gray; font-weight:normal;">ទុកទទេប្រសិនបើមិនចង់ប្តូរ (Leave blank to keep current)</small></label>
-                    <div class="password-wrapper">
-                        <input type="password" id="editPass">
-                        <span class="toggle-password" onclick="togglePassword('editPass', this)">👁️</span>
-                    </div>
-                </div>
-                
-                <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveProfile()">រក្សាទុក (Save)</button>
-            </div>
-        </div>
-
-        <div id="editAppDetailsView" class="view-section">
-            <button class="btn btn-info" style="margin-bottom: 1rem;" onclick="openSettings()">← បោះបង់ (Cancel)</button>
-            <div class="form-container small">
-                <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--secondary);">កែប្រែព័ត៌មានលម្អិត (Edit Details)</h2>
-                
-                <div class="form-group">
-                    <label>កម្មវិធី (App)</label>
-                    <input type="text" id="editDetApp">
-                </div>
-                <div class="form-group">
-                    <label>មុខងារ (Features)</label>
-                    <input type="text" id="editDetFeatures">
-                </div>
-                <div class="form-group">
-                    <label>កម្រិតសិក្សា (Levels)</label>
-                    <input type="text" id="editDetLevels">
-                </div>
-                <div class="form-group">
-                    <label>កំណែ (Version)</label>
-                    <input type="text" id="editDetVersion">
-                </div>
-                
-                <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="saveAppDetails()">រក្សាទុក (Save)</button>
-            </div>
-        </div>
-
+      </div>
     </div>
+  `;
+}
 
-    <div id="studentCertificateModal" class="certificate-overlay">
-        <div class="certificate-modal-wrapper">
-            <div class="certificate-container-box" id="certificateCaptureArea">
-                <div class="certificate-outer-border"></div>
-                <div class="cert-logo-badge" id="certLogoContainer">Logo</div>
-                
-                <h1 class="cert-main-title">លិខិតសរសើរ</h1>
-                <h3 class="cert-given-to">ជូនចំពោះ៖</h3>
-                <h2 class="cert-student-name" id="certStudentNameDisplay"></h2>
-                <div class="cert-divider-line"></div>
-                
-                <p class="cert-description" id="certDescriptionDisplay"></p>
-                
-                <div class="cert-footer-signature">
-                    <div class="cert-sig-img-container" id="certSigImgContainer"></div>
-                    <div class="cert-sig-line" id="certSignatureDisplay">Maths KH</div>
-                </div>
-                <div style="clear: both;"></div>
-            </div>
-            <div class="cert-action-btns" style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
-                <button class="btn btn-info" onclick="window.print()">🖨️ បោះពុម្ភ (Print Certificate)</button>
-                <button class="btn" style="background: linear-gradient(45deg, #11998e, #38ef7d);" onclick="saveCertificateAsFile()">💾 រក្សាទុកលិខិតសរសើរ (Save Certificate)</button>
-                <button class="btn btn-danger" onclick="document.getElementById('studentCertificateModal').style.display='none'">បិទចោល (Close)</button>
-            </div>
+function screenCategories(){
+  const rows = DATA.categories.map(c => `
+    <div class="card" data-action="open-cat" data-id="${c.id}">
+      <div class="card-row">
+        <div class="card-icon">${c.icon || '📘'}</div>
+        <div>
+          <p class="card-title">${esc(c.name)}</p>
+          <p class="card-sub">${c.tests.length} test${c.tests.length===1?'':'s'}</p>
         </div>
+        <div class="card-arrow">›</div>
+      </div>
     </div>
+  `).join('');
+  return `
+    <div class="topbar">
+      <div class="iconbtn" data-action="go-home">←</div>
+      <div class="brand" style="font-size:17px;">Categories</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div class="screen">
+      ${rows || `<div class="empty-state">No categories yet. Ask your admin to add some.</div>`}
+    </div>
+  `;
+}
 
-    <script>
-        // --- Database State (Refactored to pull from MySQL API) ---
-        let currentUser = JSON.parse(localStorage.getItem('mathskh_currentUser')) || null;
-        let currentLevel = '';
-        let editingTestId = null;
-        let tests = []; 
+function screenTests(){
+  const cat = DATA.categories.find(c => c.id === state.categoryId);
+  if (!cat) return screenCategories();
+  const rows = cat.tests.map(t => `
+    <div class="card" data-action="open-test" data-id="${t.id}">
+      <div class="card-row">
+        <div class="card-icon">📄</div>
+        <div>
+          <p class="card-title">${esc(t.title)}</p>
+          <p class="card-sub">${esc(t.desc || '')} · ${t.questions.length} questions</p>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </div>
+  `).join('');
+  return `
+    <div class="topbar">
+      <div class="iconbtn" data-action="go-categories">←</div>
+      <div class="brand" style="font-size:17px;">${esc(cat.name)}</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div class="screen">
+      ${rows || `<div class="empty-state">No tests in this category yet.</div>`}
+    </div>
+  `;
+}
 
-        // Exam Runtime Tracking State
-        let examCountdownInterval = null;
-        let selectedAnswers = {}; 
-        let currentActiveExam = null;
-        let examSubmitted = false;
-        let currentStudentQuestionIndex = 0;
+function screenTestIntro(){
+  const cat = DATA.categories.find(c => c.id === state.categoryId);
+  const test = cat && cat.tests.find(t => t.id === state.testId);
+  if (!test) return screenCategories();
+  return `
+    <div class="topbar">
+      <div class="iconbtn" data-action="go-tests">←</div>
+      <div class="brand" style="font-size:17px;">${esc(test.title)}</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div class="screen">
+      <div class="card static">
+        <div class="eyebrow">${esc(cat.name)}</div>
+        <h1 class="page-title" style="font-size:21px;">${esc(test.title)}</h1>
+        <p class="lede">${esc(test.desc || '')}</p>
+        <div class="divider" style="margin:14px 0;"></div>
+        <p class="lede"><b style="color:var(--navy);">${test.questions.length}</b> multiple-choice questions · no time limit</p>
+      </div>
+      <button class="btn btn-accent" data-action="start-quiz">Start test</button>
+    </div>
+  `;
+}
 
-        // Dynamic LED Marquee State Defaults
-        let ledSettings = JSON.parse(localStorage.getItem('mathskh_ledSettings')) || {
-            text: "Maths KH សូមស្វាគមន៍! សូមចូលទៅពង្រឹងចំណេះដឹង និងប្រលងសាកល្បងដើម្បីរង្វាយតម្លៃសមត្ថភាពខ្លួនដែលបានរៀនកន្លងមក។ សូមអរគុណ!",
-            textColor: "#ffffff",
-            bgColor: "#ff0000"
-        };
-
-        // Admin Customizable Certificate States
-        let globalCertSettings = JSON.parse(localStorage.getItem('mathskh_certSettings')) || {
-            logoUrl: "",
-            logoData: "",
-            borderData: "",
-            sigData: "",
-            descriptionTemplate: "សូមអរគុណចំពោះការខិតខំប្រឹងប្រែងប្រឡងគណិតវិទ្យាសាកល្បងនៅប្រព័ន្ធជំនួយការសិក្សា ដែលទទួលបានលទ្ធផលជាទីគាប់ចិត្ត ជាមួយនឹងនិទ្ទេសខ្ពស់សាកសមនឹងសមត្ថភាពពិតប្រាកដ។",
-            signature: "គណៈគ្រប់គ្រង Maths KH"
-        };
-
-        // Dynamic System Details mapping
-        let appDetails = JSON.parse(localStorage.getItem('mathskh_appDetails')) || {
-            app: 'Maths KH',
-            features: 'ធ្វើវិញ្ញាសាគណិតវិទ្យា (Math Test Practice)',
-            levels: 'ឌីប្លូម (ថ្នាក់ទី ៩) & បាក់ឌុប (ថ្នាក់ទី ១២)',
-            version: '1.0.0'
-        };
-
-        const khmerAlphabet = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ', 'ឈ', 'ញ', 'ដ', 'ឋ', 'ឌ', 'ឍ', 'ណ', 'ត', 'ថ', 'ទ', 'ធ', 'ន', 'ប', 'ផ', 'ព', 'ភ', 'ម', 'យ', 'រ', 'ល', 'វ', 'ស', 'ហ', 'ឡ', 'អ'];
-        const katexOptions = {
-            delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ],
-            throwOnError: false
-        };
-
-        // --- LED System Engines ---
-        function renderLedBanner() {
-            const marquee = document.getElementById('ledMarqueeText');
-            const container = document.getElementById('ledBannerContainer');
-            marquee.innerText = ledSettings.text;
-            container.style.backgroundColor = ledSettings.bgColor;
-            marquee.style.color = ledSettings.textColor;
-        }
-
-        function updateLedBannerLive() {
-            const marquee = document.getElementById('ledMarqueeText');
-            const container = document.getElementById('ledBannerContainer');
-            marquee.innerText = document.getElementById('inputLedText').value;
-            container.style.backgroundColor = document.getElementById('inputLedBgColor').value;
-            marquee.style.color = document.getElementById('inputLedTextColor').value;
-        }
-
-        function saveLedSettings() {
-            ledSettings.text = document.getElementById('inputLedText').value;
-            ledSettings.textColor = document.getElementById('inputLedTextColor').value;
-            ledSettings.bgColor = document.getElementById('inputLedBgColor').value;
-            localStorage.setItem('mathskh_ledSettings', JSON.stringify(ledSettings));
-            renderLedBanner();
-            alert("ការកំណត់ LED រក្សាទុកជោគជ័យ!");
-        }
-
-        function syncWebsiteHeaderLogo() {
-            const logoContainer = document.getElementById('mainWebsiteLogo');
-            if (globalCertSettings.logoData) {
-                logoContainer.innerHTML = `<img src="${globalCertSettings.logoData}" alt="Logo"> Maths KH`;
-            } else if (globalCertSettings.logoUrl) {
-                logoContainer.innerHTML = `<img src="${globalCertSettings.logoUrl}" alt="Logo"> Maths KH`;
-            } else {
-                logoContainer.innerHTML = `<span>📐</span> Maths KH`;
-            }
-        }
-
-        // --- Admin Certificate Config Engines ---
-        function saveCertificateSettings() {
-            globalCertSettings.logoUrl = document.getElementById('inputCertLogoUrl').value.trim();
-            globalCertSettings.descriptionTemplate = document.getElementById('inputCertDescription').value.trim();
-            globalCertSettings.signature = document.getElementById('inputCertSignature').value.trim();
-
-            const borderFile = document.getElementById('inputCertBorderFile').files[0];
-            const logoFile = document.getElementById('inputCertLogoFile').files[0];
-            const sigFile = document.getElementById('inputCertSigFile').files[0];
-
-            let processes = [];
-            if (borderFile) {
-                processes.push(new Promise((resolve) => {
-                    let reader = new FileReader();
-                    reader.onload = function(e) { globalCertSettings.borderData = e.target.result; resolve(); };
-                    reader.readAsDataURL(borderFile);
-                }));
-            }
-            if (logoFile) {
-                processes.push(new Promise((resolve) => {
-                    let reader = new FileReader();
-                    reader.onload = function(e) { globalCertSettings.logoData = e.target.result; resolve(); };
-                    reader.readAsDataURL(logoFile);
-                }));
-            }
-            if (sigFile) {
-                processes.push(new Promise((resolve) => {
-                    let reader = new FileReader();
-                    reader.onload = function(e) { globalCertSettings.sigData = e.target.result; resolve(); };
-                    reader.readAsDataURL(sigFile);
-                }));
-            }
-
-            Promise.all(processes).then(() => {
-                localStorage.setItem('mathskh_certSettings', JSON.stringify(globalCertSettings));
-                syncWebsiteHeaderLogo();
-                alert("ការកំណត់លិខិតសរសើរត្រូវបានរក្សាទុក!");
-            });
-        }
-
-        // --- Color Palettes Selection Engine ---
-        function changeColor(colorName) {
-            document.body.className = '';
-            document.body.classList.add('color-' + colorName);
-            localStorage.setItem('mathskh_color', colorName);
-            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById('theme-' + colorName);
-            if(activeBtn) activeBtn.classList.add('active');
-        }
-
-        function loadSavedColor() {
-            changeColor(localStorage.getItem('mathskh_color') || 'navy');
-        }
-
-        // --- Navigation ---
-        function init() { loadSavedColor(); renderLedBanner(); syncWebsiteHeaderLogo(); updateNav(); showView('homeView'); }
-
-        function showView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (document.getElementById('authError')) document.getElementById('authError').style.display = 'none';
-            if (document.getElementById('regError')) document.getElementById('regError').style.display = 'none';
-        }
-
-        function updateNav() {
-            const nav = document.getElementById('navButtons');
-            if (currentUser) {
-                nav.innerHTML = `
-                    <span style="color: white; margin-right: 15px; font-weight: bold;">👤 ${currentUser.fullName || currentUser.username}</span>
-                    <button class="btn btn-outline" onclick="openSettings()">⚙️ ការកំណត់ (Settings)</button>
-                `;
-            } else {
-                nav.innerHTML = `<button class="btn btn-outline" onclick="showView('authView')">ចូល / បង្កើតគណនី</button>`;
-            }
-        }
-
-        // --- API Bridge Fetch Utilities ---
-        async function makeRequest(action, data = {}, method = 'POST') {
-            let url = `api.php?action=${action}`;
-            let options = { method: method, headers: { 'Content-Type': 'application/json' } };
-            if (method === 'POST') options.body = JSON.stringify(data);
-            try {
-                let response = await fetch(url, options);
-                return await response.json();
-            } catch (err) {
-                console.error("API Error Response:", err);
-            }
-        }
-
-        // --- Authentication Engine Overrides ---
-        async function register() {
-            const fullName = document.getElementById('regFullName').value.trim();
-            const user = document.getElementById('regUser').value.trim();
-            const pass = document.getElementById('regPass').value.trim();
-            const verifyPass = document.getElementById('regVerifyPass').value.trim();
-            const errorEl = document.getElementById('regError');
-
-            if (!fullName || !user || !pass || !verifyPass) {
-                errorEl.innerText = "សូមបំពេញព័ត៌មានឲ្យបានគ្រប់គ្រាន់!"; errorEl.style.display = 'block'; return;
-            }
-            if (pass !== verifyPass) {
-                errorEl.innerText = "លេខសម្ងាត់មិនត្រូវគ្នាទេ!"; errorEl.style.display = 'block'; return;
-            }
-
-            let res = await makeRequest('register', { username: user, password: pass, fullName: fullName });
-            if (res && res.success) {
-                currentUser = res.user;
-                localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
-                errorEl.style.display = 'none';
-                updateNav();
-                showView('homeView');
-            } else {
-                errorEl.innerText = res.message || "Registration Failed";
-                errorEl.style.display = 'block';
-            }
-        }
-
-        async function login() {
-            const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-            
-            let res = await makeRequest('login', { username: user, password: pass });
-            if (res && res.success) {
-                currentUser = res.user;
-                localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
-                updateNav();
-                showView('homeView');
-                document.getElementById('loginUser').value = ''; document.getElementById('loginPass').value = '';
-            } else {
-                document.getElementById('authError').style.display = 'block';
-            }
-        }
-
-        function logout() { currentUser = null; localStorage.removeItem('mathskh_currentUser'); updateNav(); showView('homeView'); }
-
-        // --- Level & Dynamic Rendering Layout Logic ---
-        async function openLevel(level) {
-            currentLevel = level;
-            document.getElementById('levelTitle').innerText = level === 'Diploma' ? 'វិញ្ញាសាឌីប្លូម (ថ្នាក់ទី ៩)' : 'វិញ្ញាសាបាក់ឌុប (ថ្នាក់ទី ១២)';
-            
-            let res = await fetch(`api.php?action=get_tests&level=${encodeURIComponent(currentLevel)}`);
-            tests = await res.json();
-            
-            renderTestList();
-            showView('testListView');
-        }
-
-        function renderTestList() {
-            const grid = document.getElementById('testGrid');
-            grid.innerHTML = '';
-
-            if (tests.length === 0 && (!currentUser || currentUser.role !== 'admin')) {
-                grid.innerHTML = '<p style="text-align: center; opacity: 0.7; font-size: 1.2rem;">មិនទាន់មានវិញ្ញាសាទេ!</p>';
-            }
-
-            tests.forEach(test => {
-                grid.innerHTML += `
-                    <div class="test-item-container">
-                        <button class="btn-test-main" onclick="doTest(${test.id})">📄 ${test.title}</button>
-                    </div>
-                `;
-            });
-        }
-
-        function exitExamView() { clearInterval(examCountdownInterval); showView('testListView'); }
-        function togglePassword(inputId, iconEl) { const input = document.getElementById(inputId); if (input.type === 'password') { input.type = 'text'; iconEl.innerText = '🙈'; } else { input.type = 'password'; iconEl.innerText = '👁️'; } }
-
-        function openSettings() {
-            if (!currentUser) return;
-            document.getElementById('setFullName').innerText = currentUser.fullName || 'មិនមាន (N/A)';
-            document.getElementById('setUserName').innerText = currentUser.username;
-            document.getElementById('setRole').innerText = currentUser.role === 'admin' ? 'អ្នកគ្រប់គ្រង (Admin)' : 'សិស្ស (Student)';
-            
-            document.getElementById('detApp').innerText = appDetails.app;
-            document.getElementById('detFeatures').innerText = appDetails.features;
-            document.getElementById('detLevels').innerText = appDetails.levels;
-            document.getElementById('detVersion').innerText = appDetails.version;
-
-            const certPanel = document.getElementById('studentCertificatesPanel');
-            const certContainer = document.getElementById('studentCertificatesContainer');
-            
-            if (currentUser.role !== 'admin') {
-                certPanel.style.display = 'block'; certContainer.innerHTML = '';
-                let savedCerts = currentUser.certificates || [];
-                if (savedCerts.length === 0) {
-                    certContainer.innerHTML = '<p style="opacity: 0.6; font-style: italic;">មិនទាន់មានលិខិតសរសើរនៅឡើយទេ</p>';
-                } else {
-                    savedCerts.forEach(c => {
-                        certContainer.innerHTML += `<button class="cert-badge-btn" onclick="generateStudentCertificate('${c.grade}', '${c.testTitle.replace(/'/g, "\\'")}')"><span class="badge-icon">${c.grade}</span><span>${c.testTitle}</span></button>`;
-                    });
-                }
-            }
-            showView('settingsView');
-        }
-
-        // --- Do Test Layout with Pagination Controls ---
-        function doTest(id) {
-            const test = tests.find(t => t.id === id);
-            if (!test) return;
-            currentActiveExam = test; selectedAnswers = {}; examSubmitted = false; currentStudentQuestionIndex = 0; clearInterval(examCountdownInterval);
-            document.getElementById('examResultsContainer').innerHTML = '';
-            
-            let exercisesList = test.exercises || [];
-            let timeRemainingSeconds = parseInt(test.examTimeLimit || 60) * 60;
-            document.getElementById('examTimerContainer').innerHTML = `<div class="exam-timer-banner"><span>⏳ ពេលវេលានៅសល់៖ <span id="liveExamClock">--:--</span></span><span>📝 លំហាត់សរុប៖ ${exercisesList.length}</span></div>`;
-
-            function updateClockDisplay() {
-                let mins = Math.floor(timeRemainingSeconds / 60); let secs = timeRemainingSeconds % 60;
-                document.getElementById('liveExamClock').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-            examCountdownInterval = setInterval(() => {
-                timeRemainingSeconds--; updateClockDisplay();
-                if (timeRemainingSeconds <= 0) { clearInterval(examCountdownInterval); submitExam(); }
-            }, 1000);
-
-            let htmlOutput = `<h2 style="color: var(--primary); text-align: center; margin-bottom: 2rem; border-bottom: 2px dashed #ddd; padding-bottom: 1rem;">${test.title}</h2>`;
-            exercisesList.forEach((ex, idx) => {
-                htmlOutput += `
-                    <div class="exercise-block" id="studentExBlock-${idx}">
-                        <div class="meta-display-student"><span>💯 ពិន្ទុ៖ ${ex.score || 0}</span><span>សំណួរទី៖ ${idx + 1} / ${exercisesList.length}</span></div>
-                        <div style="font-size: 1.3rem; line-height: 1.8;" id="renderQ-${id}-${idx}">${ex.question}</div>
-                        <div class="options-grid">
-                            <div class="option-item" id="optA-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'A')"><strong>A.</strong> <span id="rendA-${id}-${idx}">${ex.options.A}</span></div>
-                            <div class="option-item" id="optB-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'B')"><strong>B.</strong> <span id="rendB-${id}-${idx}">${ex.options.B}</span></div>
-                            <div class="option-item" id="optC-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'C')"><strong>C.</strong> <span id="rendC-${id}-${idx}">${ex.options.C}</span></div>
-                            <div class="option-item" id="optD-${id}-${idx}" onclick="selectExamOption('${id}', ${idx}, 'D')"><strong>D.</strong> <span id="rendD-${id}-${idx}">${ex.options.D}</span></div>
-                        </div>
-                        <div id="ansBox-${id}-${idx}" class="answer-box">
-                            <h3 style="color: #27ae60; margin-bottom: 1rem;">ចម្លើយត្រឹមត្រូវគឺ: ${ex.correct}</h3>
-                            <div style="font-size: 1.2rem;" id="renderA-${id}-${idx}">${ex.answer || ''}</div>
-                        </div>
-                    </div>`;
-            });
-
-            htmlOutput += `<div style="display: flex; justify-content: space-between; margin-top: 3rem; gap: 15px;"><button id="btnPrevQuestion" class="btn btn-info" onclick="navigateStudentQuestion(-1)">← ត្រឡប់ក្រោយ</button><button id="btnNextQuestion" class="btn" onclick="navigateStudentQuestion(1)">បន្ទាប់ →</button><button id="btnSubmitExam" class="btn" style="display: none;" onclick="submitExam()">ផ្ញើចម្លើយ (Submit)</button></div>`;
-            document.getElementById('testPaperContent').innerHTML = htmlOutput;
-            showView('doTestView'); updateStudentQuestionVisibility();
-
-            exercisesList.forEach((ex, idx) => {
-                renderMathInElement(document.getElementById(`renderQ-${id}-${idx}`), katexOptions);
-                ['A','B','C','D'].forEach(l => renderMathInElement(document.getElementById(`rend${l}-${id}-${idx}`), katexOptions));
-            });
-        }
-
-        function selectExamOption(testId, exerciseIdx, selectedLetter) { if (examSubmitted) return; selectedAnswers[exerciseIdx] = selectedLetter; ['A','B','C','D'].forEach(letter => { const el = document.getElementById(`opt${letter}-${testId}-${exerciseIdx}`); if (letter === selectedLetter) el.classList.add('selected-highlight'); else el.classList.remove('selected-highlight'); }); }
-        function navigateStudentQuestion(direction) { let totalQuestions = currentActiveExam.exercises ? currentActiveExam.exercises.length : 1; let nextIndex = currentStudentQuestionIndex + direction; if (nextIndex >= 0 && nextIndex < totalQuestions) { currentStudentQuestionIndex = nextIndex; updateStudentQuestionVisibility(); } }
-        function updateStudentQuestionVisibility() { let totalQuestions = currentActiveExam.exercises ? currentActiveExam.exercises.length : 1; for(let i = 0; i < totalQuestions; i++) { let el = document.getElementById(`studentExBlock-${i}`); if(el) { if (i === currentStudentQuestionIndex) el.classList.add('active'); else el.classList.remove('active'); } } document.getElementById('btnPrevQuestion').style.visibility = (currentStudentQuestionIndex === 0) ? 'hidden' : 'visible'; const nextBtn = document.getElementById('btnNextQuestion'); const submitBtn = document.getElementById('btnSubmitExam'); if (examSubmitted) { nextBtn.style.display = (currentStudentQuestionIndex === totalQuestions - 1) ? 'none' : 'inline-block'; submitBtn.style.display = 'none'; } else { if (currentStudentQuestionIndex === totalQuestions - 1) { nextBtn.style.display = 'none'; submitBtn.style.display = 'inline-block'; } else { nextBtn.style.display = 'inline-block'; submitBtn.style.display = 'none'; } } }
-
-        // --- Submit Exam Logic ---
-        async function submitExam() {
-            if (examSubmitted) return;
-            examSubmitted = true;
-            clearInterval(examCountdownInterval);
-            document.getElementById('examTimerContainer').innerHTML = '';
-            
-            let exercisesList = currentActiveExam.exercises || [];
-            let totalPossibleScore = 0;
-            let userObtainedScore = 0;
-
-            exercisesList.forEach((ex, idx) => {
-                let weight = parseFloat(ex.score || 0);
-                totalPossibleScore += weight;
-                let chosen = selectedAnswers[idx];
-                let correctLetter = ex.correct;
-
-                if (chosen === correctLetter) {
-                    userObtainedScore += weight;
-                    document.getElementById(`opt${correctLetter}-${currentActiveExam.id}-${idx}`).classList.add('correct-highlight');
-                } else {
-                    if (chosen) document.getElementById(`opt${chosen}-${currentActiveExam.id}-${idx}`).classList.add('wrong-highlight');
-                    document.getElementById(`opt${correctLetter}-${currentActiveExam.id}-${idx}`).classList.add('correct-highlight');
-                }
-                document.getElementById(`ansBox-${currentActiveExam.id}-${idx}`).style.display = 'block';
-            });
-
-            let percentage = totalPossibleScore > 0 ? Math.round((userObtainedScore / totalPossibleScore) * 100) : 0;
-            let grade = 'F';
-            if (percentage >= 90) grade = 'A';
-            else if (percentage >= 80) grade = 'B';
-            else if (percentage >= 70) grade = 'C';
-            else if (percentage >= 60) grade = 'D';
-            else if (percentage >= 50) grade = 'E';
-
-            document.getElementById('examResultsContainer').innerHTML = `
-                <div class="exam-results-card">
-                    <div class="exam-results-title">📊 លទ្ធផលប្រឡងរបស់អ្នក (Exam Results)</div>
-                    <p style="font-size: 1.3rem;">ពិន្ទុទទួលបាន៖ <strong style="color:#2ecc71;">${userObtainedScore}</strong> / ${totalPossibleScore} ពិន្ទុសរុប</p>
-                    <p style="font-size: 1.2rem; color:#7f8c8d;">ភាគរយជោគជ័យ៖ <strong>${percentage}%</strong></p>
-                    <div><span class="exam-grade-badge">និទ្ទេស៖ ${grade}</span></div>
-                </div>
-            `;
-
-            currentStudentQuestionIndex = 0;
-            updateStudentQuestionVisibility();
-
-            if (grade === 'A' || grade === 'B' || grade === 'C') {
-                await makeRequest('save_certificate', { userId: currentUser.id, testId: currentActiveExam.id, grade: grade });
-                
-                if(!currentUser.certificates) currentUser.certificates = [];
-                if (!currentUser.certificates.some(c => c.testId === currentActiveExam.id)) {
-                    currentUser.certificates.push({ testId: currentActiveExam.id, testTitle: currentActiveExam.title, grade: grade, date: new Date().toLocaleDateString('km-KH') });
-                    localStorage.setItem('mathskh_currentUser', JSON.stringify(currentUser));
-                }
-                setTimeout(() => { generateStudentCertificate(grade, currentActiveExam.title); }, 800);
-            }
-        }
-
-        function generateStudentCertificate(gradeLetter, testTitle = "វិញ្ញាសាគណិតវិទ្យា") { 
-            document.getElementById('certStudentNameDisplay').innerText = currentUser.fullName || currentUser.username; 
-            document.getElementById('certDescriptionDisplay').innerHTML = `${globalCertSettings.descriptionTemplate} លើវិញ្ញាសា <strong>«${testTitle}»</strong> ទទួលបាន <strong style="color: #ff8f00; font-size: 1.6rem;">និទ្ទេស៖ ${gradeLetter}</strong>`; 
-            document.getElementById('certSignatureDisplay').innerText = globalCertSettings.signature || "Maths KH"; 
-            document.getElementById('studentCertificateModal').style.display = 'block'; 
-        }
-        
-        function saveCertificateAsFile() { alert("លិខិតសរសើរត្រូវបានរក្សាទុកជាឯកសាររូបភាព!"); }
-        window.onload = init;
-    </script>
-</body>
-</html>
+function screenQuiz(){
+  const q = state.quiz;
+  const question = q.test.questions[q.qIndex];
+  const total = q.test.questions.length;
+  const pct = Math.round(((q.qIndex) / total) * 100);
+  const selected = q.answers[q.qIndex];
+  const letters = ['A','B','C','D','E','F'];
+  const options = question.options.map((opt, i) => `
+    <div class="option ${selected===i?'selected':''}" data-action="select-opt" data-idx="${i}">
+      <div class="letter">${letters[i]}</div>
+      <div>${esc(opt)}</div>
+    </div>
+  `).join('');
+  return `
+    <div class="topbar">
+      <div class="iconbtn" data-action="quiz-back">←</div>
+      <div class="brand" style="font-size:15px;">${esc(q.test.title)}</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div class="screen">
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%;"></div></div>
+        <div class="progress-label">${q.qIndex+1} / ${total}</div>
+      </div>
+      <h1 class="page-title" style="font-size:19px;line-height:1.35;">${esc(question.text)}</h1>
+      <div style="display:flex;flex-direction:column;gap:10px;">${options}</div>
+    </div>
+    <div class="footer-nav">
+      <button class="btn btn-primary" data-action="quiz-next" ${selected==null?'disabled style="opacity:.4;"':''}>
+        ${q.qIndex === total-1 ? 'Finish test' : 'Next question'}
+      </but
